@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Name — Electrical Engineering</title>
 <meta name="description" content="Portfolio of Your Name, an EE undergrad transferring to UIC, working on quantum computing, embedded systems, and semiconductors.">
@@ -30,19 +31,43 @@
   </nav>
 </header>
 
-<main>
+<div class="page-layout">
 
-  <!-- ============ HERO ============ -->
-  <section id="hero" class="hero container">
-    <div class="portrait-frame">
-      <!-- TODO: drop your headshot at assets/images/headshot.jpg (roughly square, 500x500+) -->
-      <img src="assets/images/headshot.jpg" alt="Portrait of Your Name" onerror="this.closest('.portrait-frame').classList.add('img-error')">
-      <div class="portrait-fallback" aria-hidden="true">
+  <!-- ============ PROFILE SIDEBAR ============ -->
+  <aside class="profile-sidebar">
+    <div class="profile-photo">
+      <!-- TODO: drop your headshot at assets/images/headshot.jpg (square, 500x500+) -->
+      <img src="assets/images/headshot.jpg" alt="Portrait of Your Name" onerror="this.closest('.profile-photo').classList.add('img-error')">
+      <div class="profile-fallback" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
         <span>headshot.jpg<br>goes here</span>
       </div>
     </div>
-    <div>
+    <ul class="profile-meta">
+      <li>
+        <span class="meta-label">Location</span>
+        <!-- TODO: replace with real location -->
+        <span class="meta-value placeholder-link">City, State</span>
+      </li>
+      <li>
+        <span class="meta-label">School</span>
+        <span class="meta-value">Wilbur Wright College &rarr; UIC</span>
+      </li>
+      <li>
+        <!-- TODO: replace with real GitHub URL -->
+        <a href="#" class="placeholder-link">GitHub</a>
+      </li>
+      <li>
+        <!-- TODO: replace with real LinkedIn URL -->
+        <a href="#" class="placeholder-link">LinkedIn</a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="page-content">
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero">
       <p class="eyebrow">Electrical Engineering</p>
       <h1>Your Name</h1>
       <p class="hero-role">EE Undergrad, Wilbur Wright College &rarr; Transferring to UIC</p>
@@ -51,97 +76,98 @@
         <a href="#about" class="btn btn-ghost">About</a>
         <a href="cv/resume.pdf" class="btn btn-primary" download>Download CV</a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ ABOUT ============ -->
-  <section id="about" class="container">
-    <h2><span class="section-number">01</span>About</h2>
-    <p>
-      I'm an electrical engineering undergrad currently at Wilbur Wright College, transferring to the
-      University of Illinois Chicago (UIC) to continue my degree. I'm drawn to problems that span the
-      full stack of hardware &mdash; from the physics of a device up through the control systems and
-      algorithms running on top of it.
-    </p>
-    <p>
-      Lately that's meant researching quantum simulation algorithms through an NSF-funded summer
-      program, and building small embedded robotics projects on the side. I'm especially interested in
-      where quantum computing, embedded systems, and semiconductor devices intersect &mdash; and in
-      finding a grad program where I can dig into that further.
-    </p>
-    <ul class="interest-list">
-      <li>Quantum Computing</li>
-      <li>Embedded Systems &amp; Robotics</li>
-      <li>Semiconductor Devices</li>
-    </ul>
-  </section>
-
-  <!-- ============ RESEARCH (preview) ============ -->
-  <section id="research" class="container">
-    <h2><span class="section-number">02</span>Research</h2>
-    <div class="card">
-      <p class="card-meta">NSF SROP &middot; Michigan State University &middot; Mendoza-Cort&eacute;s Group</p>
-      <h3>Hydrogen&ndash;Lattice Quantum Computing Simulations</h3>
+    <!-- ============ ABOUT ============ -->
+    <section id="about">
+      <h2><span class="section-number">01</span>About</h2>
       <p>
-        Summer research on VQE and QITE simulations of hydrogen lattice systems and quantum error
-        mitigation, mentored by William Comaskey.
+        I'm an electrical engineering undergrad currently at Wilbur Wright College, transferring to the
+        University of Illinois Chicago (UIC) to continue my degree. I'm drawn to problems that span the
+        full stack of hardware &mdash; from the physics of a device up through the control systems and
+        algorithms running on top of it.
       </p>
-      <a href="research.html" class="link-arrow">Read more about this research &rarr;</a>
-    </div>
-  </section>
-
-  <!-- ============ PROJECTS (preview) ============ -->
-  <section id="projects" class="container">
-    <h2><span class="section-number">03</span>Projects</h2>
-    <div class="card">
-      <p class="card-meta">Personal Project &middot; ESP32 &middot; Embedded Systems / Robotics</p>
-      <h3>ESP32 Maze-Solving Robot</h3>
       <p>
-        Autonomous maze-solving robot using ultrasonic sensors, an L298N motor driver, BFS
-        pathfinding, and a live WebSocket visualizer.
+        Lately that's meant researching quantum simulation algorithms through an NSF-funded summer
+        program, and building small embedded robotics projects on the side. I'm especially interested in
+        where quantum computing, embedded systems, and semiconductor devices intersect &mdash; and in
+        finding a grad program where I can dig into that further.
       </p>
-      <a href="projects.html" class="link-arrow">View all projects &rarr;</a>
-    </div>
-  </section>
+      <ul class="interest-list">
+        <li>Quantum Computing</li>
+        <li>Embedded Systems &amp; Robotics</li>
+        <li>Semiconductor Devices</li>
+      </ul>
+    </section>
 
-  <!-- ============ CV / RESUME ============ -->
-  <section id="cv" class="container">
-    <h2><span class="section-number">04</span>CV / Resume</h2>
-    <p>The embedded viewer below will show my resume once it's added &mdash; or use the download button.</p>
-    <div class="cv-embed">
-      <!-- TODO: add resume.pdf to CV_Website/cv/ -->
-      <object data="cv/resume.pdf" type="application/pdf">
-        <div class="cv-fallback">
-          <p>Resume PDF coming soon. <a href="cv/resume.pdf" class="placeholder-link">cv/resume.pdf</a></p>
-        </div>
-      </object>
-    </div>
-    <a href="cv/resume.pdf" class="btn btn-primary" download>Download Resume (PDF)</a>
-  </section>
+    <!-- ============ RESEARCH (preview) ============ -->
+    <section id="research">
+      <h2><span class="section-number">02</span>Research</h2>
+      <div class="card">
+        <p class="card-meta">NSF SROP &middot; Michigan State University &middot; Mendoza-Cort&eacute;s Group</p>
+        <h3>Hydrogen&ndash;Lattice Quantum Computing Simulations</h3>
+        <p>
+          Summer research on VQE and QITE simulations of hydrogen lattice systems and quantum error
+          mitigation, mentored by William Comaskey.
+        </p>
+        <a href="research.html" class="link-arrow">Read more about this research &rarr;</a>
+      </div>
+    </section>
 
-  <!-- ============ CONTACT ============ -->
-  <section id="contact" class="container">
-    <h2><span class="section-number">05</span>Contact</h2>
-    <p>Happy to talk research, projects, or grad school &mdash; reach out through any of these.</p>
-    <ul class="contact-list">
-      <li>
-        <span class="contact-label">Email</span>
-        <!-- TODO: replace with real email -->
-        <a href="mailto:your.email@example.com" class="placeholder-link">your.email@example.com</a>
-      </li>
-      <li>
-        <span class="contact-label">GitHub</span>
-        <a href="https://github.com/dr-abrianas" target="_blank" rel="noopener">github.com/dr-abrianas</a>
-      </li>
-      <li>
-        <span class="contact-label">LinkedIn</span>
-        <!-- TODO: replace with real LinkedIn URL -->
-        <a href="#" class="placeholder-link">linkedin.com/in/your-handle</a>
-      </li>
-    </ul>
-  </section>
+    <!-- ============ PROJECTS (preview) ============ -->
+    <section id="projects">
+      <h2><span class="section-number">03</span>Projects</h2>
+      <div class="card">
+        <p class="card-meta">Personal Project &middot; ESP32 &middot; Embedded Systems / Robotics</p>
+        <h3>ESP32 Maze-Solving Robot</h3>
+        <p>
+          Autonomous maze-solving robot using ultrasonic sensors, an L298N motor driver, BFS
+          pathfinding, and a live WebSocket visualizer.
+        </p>
+        <a href="projects.html" class="link-arrow">View all projects &rarr;</a>
+      </div>
+    </section>
 
-</main>
+    <!-- ============ CV / RESUME ============ -->
+    <section id="cv">
+      <h2><span class="section-number">04</span>CV / Resume</h2>
+      <p>The embedded viewer below will show my resume once it's added &mdash; or use the download button.</p>
+      <div class="cv-embed">
+        <!-- TODO: add resume.pdf to cv/ -->
+        <object data="cv/resume.pdf" type="application/pdf">
+          <div class="cv-fallback">
+            <p>Resume PDF coming soon. <a href="cv/resume.pdf" class="placeholder-link">cv/resume.pdf</a></p>
+          </div>
+        </object>
+      </div>
+      <a href="cv/resume.pdf" class="btn btn-primary" download>Download Resume (PDF)</a>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact">
+      <h2><span class="section-number">05</span>Contact</h2>
+      <p>Happy to talk research, projects, or grad school &mdash; reach out through any of these.</p>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-label">Email</span>
+          <!-- TODO: replace with real email -->
+          <a href="mailto:your.email@example.com" class="placeholder-link">your.email@example.com</a>
+        </li>
+        <li>
+          <span class="contact-label">GitHub</span>
+          <!-- TODO: replace with real GitHub URL -->
+          <a href="#" class="placeholder-link">github.com/your-handle</a>
+        </li>
+        <li>
+          <span class="contact-label">LinkedIn</span>
+          <!-- TODO: replace with real LinkedIn URL -->
+          <a href="#" class="placeholder-link">linkedin.com/in/your-handle</a>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+</div>
 
 <footer class="site-footer container">
   <p>&copy; <span data-year></span> Your Name. Built with plain HTML, CSS &amp; JS.</p>

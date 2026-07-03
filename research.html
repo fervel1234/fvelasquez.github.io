@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){var t=localStorage.getItem("theme");document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research — Your Name</title>
 <meta name="description" content="Research on quantum simulation algorithms (VQE, QITE) and quantum error mitigation, NSF SROP at Michigan State University.">
@@ -30,7 +31,39 @@
   </nav>
 </header>
 
-<main class="container">
+<div class="page-layout">
+
+  <aside class="profile-sidebar">
+    <div class="profile-photo">
+      <!-- TODO: drop your headshot at assets/images/headshot.jpg (square, 500x500+) -->
+      <img src="assets/images/headshot.jpg" alt="Portrait of Your Name" onerror="this.closest('.profile-photo').classList.add('img-error')">
+      <div class="profile-fallback" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span>headshot.jpg<br>goes here</span>
+      </div>
+    </div>
+    <ul class="profile-meta">
+      <li>
+        <span class="meta-label">Location</span>
+        <!-- TODO: replace with real location -->
+        <span class="meta-value placeholder-link">City, State</span>
+      </li>
+      <li>
+        <span class="meta-label">School</span>
+        <span class="meta-value">Wilbur Wright College &rarr; UIC</span>
+      </li>
+      <li>
+        <!-- TODO: replace with real GitHub URL -->
+        <a href="#" class="placeholder-link">GitHub</a>
+      </li>
+      <li>
+        <!-- TODO: replace with real LinkedIn URL -->
+        <a href="#" class="placeholder-link">LinkedIn</a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="page-content">
 
   <section class="page-hero">
     <h1><span class="section-number">02</span>Research</h1>
@@ -82,12 +115,12 @@
     </div>
 
     <p class="card-meta">Mentor: William Comaskey &middot; Group: Mendoza-Cort&eacute;s Group, Michigan State University</p>
-    <p>See more of my work on <a href="https://github.com/dr-abrianas" target="_blank" rel="noopener">GitHub (dr-abrianas)</a>.</p>
   </section>
 
   <a href="index.html" class="back-link">&larr; Back to home</a>
 
-</main>
+  </main>
+</div>
 
 <footer class="site-footer container">
   <p>&copy; <span data-year></span> Your Name. Built with plain HTML, CSS &amp; JS.</p>

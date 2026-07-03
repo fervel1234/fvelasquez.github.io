@@ -1,18 +1,14 @@
 (function () {
   "use strict";
 
-  /* Theme toggle: respects OS preference until the user overrides it. */
+  /* Theme toggle: the inline script in <head> already set data-theme
+     (defaulting to dark) before paint. This just flips it on click. */
   var root = document.documentElement;
   var toggleBtn = document.getElementById("theme-toggle");
-  var stored = localStorage.getItem("theme");
-  if (stored === "light" || stored === "dark") {
-    root.setAttribute("data-theme", stored);
-  }
 
   if (toggleBtn) {
     toggleBtn.addEventListener("click", function () {
-      var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var current = root.getAttribute("data-theme") || (prefersDark ? "dark" : "light");
+      var current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
       var next = current === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
