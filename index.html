@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Electrical Engineering</title>
+<meta name="description" content="Portfolio of Your Name, an EE undergrad transferring to UIC, working on quantum computing, embedded systems, and semiconductors.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav-name">Your Name</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#cv">CV</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="hero container">
+    <div class="portrait-frame">
+      <!-- TODO: drop your headshot at assets/images/headshot.jpg (roughly square, 500x500+) -->
+      <img src="assets/images/headshot.jpg" alt="Portrait of Your Name" onerror="this.closest('.portrait-frame').classList.add('img-error')">
+      <div class="portrait-fallback" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span>headshot.jpg<br>goes here</span>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Electrical Engineering</p>
+      <h1>Your Name</h1>
+      <p class="hero-role">EE Undergrad, Wilbur Wright College &rarr; Transferring to UIC</p>
+      <p class="hero-tagline">Building at the intersection of quantum computing, embedded systems, and semiconductors.</p>
+      <div class="hero-links">
+        <a href="#about" class="btn btn-ghost">About</a>
+        <a href="cv/resume.pdf" class="btn btn-primary" download>Download CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="container">
+    <h2><span class="section-number">01</span>About</h2>
+    <p>
+      I'm an electrical engineering undergrad currently at Wilbur Wright College, transferring to the
+      University of Illinois Chicago (UIC) to continue my degree. I'm drawn to problems that span the
+      full stack of hardware &mdash; from the physics of a device up through the control systems and
+      algorithms running on top of it.
+    </p>
+    <p>
+      Lately that's meant researching quantum simulation algorithms through an NSF-funded summer
+      program, and building small embedded robotics projects on the side. I'm especially interested in
+      where quantum computing, embedded systems, and semiconductor devices intersect &mdash; and in
+      finding a grad program where I can dig into that further.
+    </p>
+    <ul class="interest-list">
+      <li>Quantum Computing</li>
+      <li>Embedded Systems &amp; Robotics</li>
+      <li>Semiconductor Devices</li>
+    </ul>
+  </section>
+
+  <!-- ============ RESEARCH (preview) ============ -->
+  <section id="research" class="container">
+    <h2><span class="section-number">02</span>Research</h2>
+    <div class="card">
+      <p class="card-meta">NSF SROP &middot; Michigan State University &middot; Mendoza-Cort&eacute;s Group</p>
+      <h3>Hydrogen&ndash;Lattice Quantum Computing Simulations</h3>
+      <p>
+        Summer research on VQE and QITE simulations of hydrogen lattice systems and quantum error
+        mitigation, mentored by William Comaskey.
+      </p>
+      <a href="research.html" class="link-arrow">Read more about this research &rarr;</a>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS (preview) ============ -->
+  <section id="projects" class="container">
+    <h2><span class="section-number">03</span>Projects</h2>
+    <div class="card">
+      <p class="card-meta">Personal Project &middot; ESP32 &middot; Embedded Systems / Robotics</p>
+      <h3>ESP32 Maze-Solving Robot</h3>
+      <p>
+        Autonomous maze-solving robot using ultrasonic sensors, an L298N motor driver, BFS
+        pathfinding, and a live WebSocket visualizer.
+      </p>
+      <a href="projects.html" class="link-arrow">View all projects &rarr;</a>
+    </div>
+  </section>
+
+  <!-- ============ CV / RESUME ============ -->
+  <section id="cv" class="container">
+    <h2><span class="section-number">04</span>CV / Resume</h2>
+    <p>The embedded viewer below will show my resume once it's added &mdash; or use the download button.</p>
+    <div class="cv-embed">
+      <!-- TODO: add resume.pdf to CV_Website/cv/ -->
+      <object data="cv/resume.pdf" type="application/pdf">
+        <div class="cv-fallback">
+          <p>Resume PDF coming soon. <a href="cv/resume.pdf" class="placeholder-link">cv/resume.pdf</a></p>
+        </div>
+      </object>
+    </div>
+    <a href="cv/resume.pdf" class="btn btn-primary" download>Download Resume (PDF)</a>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="container">
+    <h2><span class="section-number">05</span>Contact</h2>
+    <p>Happy to talk research, projects, or grad school &mdash; reach out through any of these.</p>
+    <ul class="contact-list">
+      <li>
+        <span class="contact-label">Email</span>
+        <!-- TODO: replace with real email -->
+        <a href="mailto:your.email@example.com" class="placeholder-link">your.email@example.com</a>
+      </li>
+      <li>
+        <span class="contact-label">GitHub</span>
+        <a href="https://github.com/dr-abrianas" target="_blank" rel="noopener">github.com/dr-abrianas</a>
+      </li>
+      <li>
+        <span class="contact-label">LinkedIn</span>
+        <!-- TODO: replace with real LinkedIn URL -->
+        <a href="#" class="placeholder-link">linkedin.com/in/your-handle</a>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer container">
+  <p>&copy; <span data-year></span> Your Name. Built with plain HTML, CSS &amp; JS.</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.pio
+.vscode/
+.claude/
+
+# PlatformIO firmware project (unrelated to the portfolio site in this repo)
+src/
+include/
+lib/
+test/
+platformio.ini
