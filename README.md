@@ -6,7 +6,7 @@ project settings if this folder ends up nested in a larger repo).
 
 ## Structure
 
-- `index.html` — Hero, About, Research preview, Projects preview, CV, Contact
+- `index.html` — Hero, About, Research preview, Projects preview, Blog, CV, Contact
 - `research.html` — full Research writeup
 - `projects.html` — full Projects list
 - `css/styles.css` — all styles (theme variables, layout, responsive rules)
@@ -24,8 +24,10 @@ Search each file for `TODO` comments, or just look for anything marked
 - [ ] Add `assets/images/headshot.jpg` (square, 500x500+) — the profile
       sidebar photo (on every page) will pick it up automatically once the
       file exists
-- [ ] Profile sidebar (in every page's `<aside class="profile-meta">`) —
+- [ ] Profile sidebar (in every page's `<aside class="profile-sidebar">`) —
       real Location, GitHub URL, and LinkedIn URL
+- [ ] Add `assets/images/school-logo.png` — small logo shown next to "School"
+      in the sidebar; falls back to a generic icon until it exists
 - [ ] Add `cv/resume.pdf` — the CV section's embed and download button both
       point here already
 - [ ] `research.html` — replace the placeholder Hydrogen-Lattice-QC repo link
@@ -33,6 +35,9 @@ Search each file for `TODO` comments, or just look for anything marked
       figure/diagram to show
 - [ ] `projects.html` — add `assets/images/maze-robot-1.jpg` (or a GIF), and
       replace the placeholder "Code" / "Demo" links with real ones
+- [ ] `index.html` Blog section — currently just placeholder text and a
+      placeholder image (`assets/images/blog-placeholder.jpg`); replace with
+      real posts whenever that happens
 - [ ] `index.html` Contact section — real email, GitHub URL, and LinkedIn URL
 - [ ] Add more `<article class="project">` blocks in `projects.html` as you
       build more things — a duplicable template block is already at the

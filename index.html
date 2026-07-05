@@ -7,6 +7,9 @@
 <title>Your Name — Electrical Engineering</title>
 <meta name="description" content="Portfolio of Your Name, an EE undergrad transferring to UIC, working on quantum computing, embedded systems, and semiconductors.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Pixel&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -21,6 +24,7 @@
       <li><a href="index.html#about">About</a></li>
       <li><a href="research.html">Research</a></li>
       <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#blog">Blog</a></li>
       <li><a href="index.html#cv">CV</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
@@ -46,20 +50,38 @@
     <ul class="profile-meta">
       <li>
         <span class="meta-label">Location</span>
-        <!-- TODO: replace with real location -->
-        <span class="meta-value placeholder-link">City, State</span>
+        <span class="meta-value placeholder-link">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 1 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          <!-- TODO: replace with real location -->
+          City, State
+        </span>
       </li>
       <li>
         <span class="meta-label">School</span>
-        <span class="meta-value">Wilbur Wright College &rarr; UIC</span>
+        <span class="meta-value">
+          <span class="meta-logo-frame">
+            <!-- TODO: drop your school's logo at assets/images/school-logo.png -->
+            <img src="assets/images/school-logo.png" alt="School logo" onerror="this.closest('.meta-logo-frame').classList.add('img-error')">
+            <span class="meta-logo-fallback" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 2.5 3 6 3s6-1.5 6-3v-5.5"/></svg>
+            </span>
+          </span>
+          Wilbur Wright College &rarr; UIC
+        </span>
       </li>
       <li>
         <!-- TODO: replace with real GitHub URL -->
-        <a href="#" class="placeholder-link">GitHub</a>
+        <a href="#" class="placeholder-link meta-link">
+          <svg class="meta-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
       </li>
       <li>
         <!-- TODO: replace with real LinkedIn URL -->
-        <a href="#" class="placeholder-link">LinkedIn</a>
+        <a href="#" class="placeholder-link meta-link">
+          <svg class="meta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.114 20.452H3.558V9h3.556v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
       </li>
     </ul>
   </aside>
@@ -128,9 +150,23 @@
       </div>
     </section>
 
+    <!-- ============ BLOG ============ -->
+    <section id="blog">
+      <h2><span class="section-number">04</span>Blog</h2>
+      <p>Nothing published yet &mdash; this is where write-ups on projects, research, and things I'm learning will go.</p>
+      <div class="img-frame blog-placeholder-img">
+        <!-- TODO: replace with a real blog preview image once posts exist -->
+        <img src="assets/images/blog-placeholder.jpg" alt="Blog preview placeholder" onerror="this.closest('.img-frame').classList.add('img-error')">
+        <div class="img-fallback" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+          <span>blog-placeholder.jpg<br>goes here</span>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ CV / RESUME ============ -->
     <section id="cv">
-      <h2><span class="section-number">04</span>CV / Resume</h2>
+      <h2><span class="section-number">05</span>CV / Resume</h2>
       <p>The embedded viewer below will show my resume once it's added &mdash; or use the download button.</p>
       <div class="cv-embed">
         <!-- TODO: add resume.pdf to cv/ -->
@@ -145,7 +181,7 @@
 
     <!-- ============ CONTACT ============ -->
     <section id="contact">
-      <h2><span class="section-number">05</span>Contact</h2>
+      <h2><span class="section-number">06</span>Contact</h2>
       <p>Happy to talk research, projects, or grad school &mdash; reach out through any of these.</p>
       <ul class="contact-list">
         <li>

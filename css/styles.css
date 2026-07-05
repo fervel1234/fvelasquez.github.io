@@ -16,6 +16,7 @@
 
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --display: "Geist Pixel", var(--mono);
 
   --max-width: 920px;
   --max-width-layout: 1040px;
@@ -75,7 +76,12 @@ a {
 }
 a:hover { text-decoration: underline; }
 
-h1, h2, h3, h4 { line-height: 1.25; font-weight: 650; margin: 0 0 0.5em; }
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  line-height: 1.25;
+  font-weight: 650;
+  margin: 0 0 0.5em;
+}
 
 p { margin: 0 0 1em; color: var(--text); }
 
@@ -168,8 +174,53 @@ main { display: block; }
   color: var(--text-muted);
   margin-bottom: 2px;
 }
-.profile-meta .meta-value { color: var(--text); }
+.profile-meta .meta-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+}
+.profile-meta a.meta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 .profile-meta a { font-weight: 600; }
+
+.meta-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+.profile-meta a .meta-icon { color: currentColor; }
+
+.meta-logo-frame {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  position: relative;
+  flex-shrink: 0;
+}
+.meta-logo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.meta-logo-fallback {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+.meta-logo-fallback svg { width: 12px; height: 12px; }
+.meta-logo-frame.img-error img { display: none; }
+.meta-logo-frame.img-error .meta-logo-fallback { display: flex; }
 
 section, .page-section {
   padding: 72px 0;
@@ -226,7 +277,7 @@ section:last-of-type, .page-section:last-of-type { border-bottom: none; }
 }
 
 .nav-name {
-  font-family: var(--mono);
+  font-family: var(--display);
   font-weight: 600;
   color: var(--text);
   font-size: 0.95rem;
@@ -299,6 +350,7 @@ section:last-of-type, .page-section:last-of-type { border-bottom: none; }
   display: inline-block;
   padding: 10px 18px;
   border-radius: 8px;
+  font-family: var(--display);
   font-size: 0.95rem;
   font-weight: 600;
   border: 1px solid transparent;
@@ -493,6 +545,15 @@ section:last-of-type, .page-section:last-of-type { border-bottom: none; }
   gap: 18px;
   margin-top: 14px;
   flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Blog section
+   ========================================================================== */
+
+.blog-placeholder-img {
+  max-width: 360px;
+  margin-top: 20px;
 }
 
 /* ==========================================================================
