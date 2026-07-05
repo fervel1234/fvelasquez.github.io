@@ -6,9 +6,10 @@ project settings if this folder ends up nested in a larger repo).
 
 ## Structure
 
-- `index.html` — Hero, About, Research preview, Projects preview, Blog, CV, Contact
+- `index.html` — Hero, About, Research preview, Projects preview, Blog preview, CV, Contact
 - `research.html` — full Research writeup
 - `projects.html` — full Projects list
+- `blog.html` — full Blog page (placeholder text + image until there are posts)
 - `css/styles.css` — all styles (theme variables, layout, responsive rules)
 - `js/main.js` — theme toggle, mobile nav, image-placeholder fallback
 - `assets/images/` — drop project/headshot images here
@@ -35,9 +36,9 @@ Search each file for `TODO` comments, or just look for anything marked
       figure/diagram to show
 - [ ] `projects.html` — add `assets/images/maze-robot-1.jpg` (or a GIF), and
       replace the placeholder "Code" / "Demo" links with real ones
-- [ ] `index.html` Blog section — currently just placeholder text and a
-      placeholder image (`assets/images/blog-placeholder.jpg`); replace with
-      real posts whenever that happens
+- [ ] `blog.html` — currently just placeholder text and a placeholder image
+      (`assets/images/blog-placeholder.jpg`); replace with real posts
+      whenever that happens
 - [ ] `index.html` Contact section — real email, GitHub URL, and LinkedIn URL
 - [ ] Add more `<article class="project">` blocks in `projects.html` as you
       build more things — a duplicable template block is already at the
