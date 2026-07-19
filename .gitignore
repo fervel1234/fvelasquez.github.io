@@ -2,6 +2,9 @@
 .vscode/
 .claude/
 
+# Local blog publishing tool — not part of the published site
+blog-admin/
+
 # PlatformIO firmware project (unrelated to the portfolio site in this repo)
 src/
 include/
