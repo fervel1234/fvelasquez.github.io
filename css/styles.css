@@ -759,6 +759,63 @@ section h2, .page-hero h1 {
   border: 1px solid var(--border);
   margin: 28px 0;
   width: 100%;
+  cursor: zoom-in;
+  transition: opacity 0.15s ease;
+}
+
+.post-body img:hover { opacity: 0.9; }
+
+/* Lightbox: clicking a post image opens it full-size (js/main.js builds
+   this overlay once per page and reuses it for every image). */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(4, 6, 10, 0.88);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.lightbox-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: zoom-out;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.22); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-overlay { transition: none; }
 }
 
 .post-body blockquote {
@@ -826,19 +883,20 @@ section h2, .page-hero h1 {
   display: block;
   width: 100%;
   margin-top: 8px;
-  padding: 7px 12px;
+  padding: 8px 12px;
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
   background: var(--code-bg);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--accent);
   border-radius: 8px;
-  color: var(--text-muted);
+  color: var(--accent);
   cursor: pointer;
 }
 
 .code-collapse-toggle:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--accent-ink);
+  background: var(--accent);
 }
 
 /* ==========================================================================

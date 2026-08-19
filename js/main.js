@@ -36,6 +36,53 @@
     el.textContent = new Date().getFullYear();
   });
 
+  /* Lightbox: click any in-post image to view it full-size; click the
+     overlay, the close button, or press Escape to dismiss. */
+  var postImages = document.querySelectorAll(".post-body img");
+  if (postImages.length) {
+    var overlay = document.createElement("div");
+    overlay.className = "lightbox-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Expanded image");
+
+    var overlayImg = document.createElement("img");
+    overlay.appendChild(overlayImg);
+
+    var closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "lightbox-close";
+    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.innerHTML = "&times;";
+    overlay.appendChild(closeBtn);
+
+    document.body.appendChild(overlay);
+
+    function openLightbox(img) {
+      overlayImg.src = img.currentSrc || img.src;
+      overlayImg.alt = img.alt || "";
+      overlay.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      overlay.classList.remove("is-open");
+      document.body.style.overflow = "";
+    }
+
+    postImages.forEach(function (img) {
+      img.addEventListener("click", function () { openLightbox(img); });
+    });
+
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) closeLightbox();
+    });
+    closeBtn.addEventListener("click", closeLightbox);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && overlay.classList.contains("is-open")) closeLightbox();
+    });
+  }
+
   /* Collapse long code blocks in blog posts to ~10 lines with a toggle to
      expand — purely presentational (see .code-collapse in styles.css),
      the code itself is never touched. Runs on every post automatically,
