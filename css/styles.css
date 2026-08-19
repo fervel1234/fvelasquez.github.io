@@ -759,6 +759,8 @@ section h2, .page-hero h1 {
   border: 1px solid var(--border);
   margin: 28px 0;
   width: 100%;
+  max-height: 420px;
+  object-fit: cover;
   cursor: zoom-in;
   transition: opacity 0.15s ease;
 }
