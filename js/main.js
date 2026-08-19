@@ -35,4 +35,33 @@
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
   });
+
+  /* Collapse long code blocks in blog posts to ~10 lines with a toggle to
+     expand — purely presentational (see .code-collapse in styles.css),
+     the code itself is never touched. Runs on every post automatically,
+     no per-post regeneration needed. */
+  var CODE_COLLAPSE_LINE_LIMIT = 10;
+  document.querySelectorAll(".post-body pre").forEach(function (pre) {
+    var codeEl = pre.querySelector("code");
+    if (!codeEl) return;
+
+    var lineCount = codeEl.textContent.replace(/\n$/, "").split("\n").length;
+    if (lineCount <= CODE_COLLAPSE_LINE_LIMIT) return;
+
+    var wrapper = document.createElement("div");
+    wrapper.className = "code-collapse is-collapsed";
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "code-collapse-toggle";
+    toggle.textContent = "Show all " + lineCount + " lines";
+    wrapper.appendChild(toggle);
+
+    toggle.addEventListener("click", function () {
+      var collapsed = wrapper.classList.toggle("is-collapsed");
+      toggle.textContent = collapsed ? "Show all " + lineCount + " lines" : "Show less";
+    });
+  });
 })();

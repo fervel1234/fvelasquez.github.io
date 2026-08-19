@@ -795,6 +795,52 @@ section h2, .page-hero h1 {
   padding: 0;
 }
 
+/* Long code blocks are collapsed to ~10 lines by main.js (wrapped in
+   .code-collapse) so a post reads cleaner initially; the code itself is
+   untouched, this is purely a visual clamp + fade with a toggle to expand. */
+.code-collapse {
+  position: relative;
+  margin: 20px 0;
+}
+
+.code-collapse pre { margin: 0; }
+
+.code-collapse.is-collapsed pre {
+  max-height: 17em;
+  overflow: hidden;
+}
+
+.code-collapse.is-collapsed::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  height: 4.5em;
+  background: linear-gradient(to bottom, transparent, var(--code-bg));
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+}
+
+.code-collapse-toggle {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px 12px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.code-collapse-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ==========================================================================
    CV section
    ========================================================================== */
