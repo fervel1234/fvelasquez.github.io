@@ -957,6 +957,17 @@ section h2, .page-hero h1 {
 }
 .page-hero p { color: var(--text-muted); font-size: 1.08rem; max-width: 60ch; }
 
+/* Post excerpt: bigger than body text, smaller than the h1 title.
+   ".page-hero p.post-excerpt" (not just ".post-excerpt") so this beats the
+   ".page-hero p" rule above on specificity rather than needing !important. */
+.page-hero p.post-excerpt {
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
 .back-link {
   display: inline-block;
   margin: 40px 0 0;
