@@ -722,7 +722,10 @@ section h2, .page-hero h1 {
 
 .post-cover {
   aspect-ratio: 16 / 9;
-  margin: 28px 0 40px;
+  /* No extra top margin — .page-hero already carries 44px of
+     padding-bottom under the title/excerpt; stacking a top margin here
+     on top of that was the oversized gap. */
+  margin: 0 0 40px;
 }
 
 .post-body {
