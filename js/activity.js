@@ -25,15 +25,19 @@
     return "blog.html";
   })();
 
-  var DAYS = 371; /* 53 weeks, the same window GitHub shows */
+  var WEEKS = 13;            /* ~3 months */
+  var DAYS = WEEKS * 7;
+  var RANGE_LABEL = "the last 3 months";
 
-  /* Grid geometry, in SVG user units (= CSS px at 1:1). GitHub uses ~10px
-     cells with 3px gutters; matching that keeps the visual rhythm familiar. */
-  var CELL = 10;
-  var GAP = 3;
+  /* Grid geometry, in SVG user units (= CSS px at 1:1). A 13-week window
+     leaves room for squares over twice GitHub's ~10px, which is the point of
+     the shorter range — a few months of posts read clearly instead of
+     disappearing into a year of empty cells. */
+  var CELL = 22;
+  var GAP = 5;
   var STEP = CELL + GAP;
-  var LEFT_GUTTER = 30;  /* room for the Mon/Wed/Fri labels */
-  var TOP_PAD = 18;      /* room for the month labels */
+  var LEFT_GUTTER = 34;  /* room for the Mon/Wed/Fri labels */
+  var TOP_PAD = 22;      /* room for the month labels */
 
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -156,7 +160,7 @@
       height: height,
       viewBox: "0 0 " + width + " " + height,
       role: "group",
-      "aria-label": plural(total, "post") + " in the last year, " +
+      "aria-label": plural(total, "post") + " in " + RANGE_LABEL + ", " +
         prettyDate(first) + " to " + prettyDate(end)
     });
 
@@ -182,7 +186,7 @@
       /* Month label whenever a column opens a new month. */
       if (colDate.getUTCMonth() !== lastMonth) {
         lastMonth = colDate.getUTCMonth();
-        if (col < cols - 2) { /* skip a label that would be clipped */
+        if (col < cols - 1) { /* skip a label that would be clipped */
           var m = el("text", {
             class: "activity-axis",
             x: LEFT_GUTTER + col * STEP,
@@ -280,18 +284,25 @@
 
     var summary = document.createElement("p");
     summary.className = "activity-summary";
-    summary.textContent = plural(grid.total, "post") + " in the last year";
+    summary.textContent = plural(grid.total, "post") + " in " + RANGE_LABEL;
     mount.appendChild(summary);
+
+    /* Wrapper sized to the grid, so the bordered box hugs the squares and the
+       legend lines up with the grid's right edge instead of the page's. */
+    var inner = document.createElement("div");
+    inner.className = "activity-inner";
 
     var scroller = document.createElement("div");
     scroller.className = "activity-scroll";
     scroller.appendChild(grid.svg);
-    mount.appendChild(scroller);
+    inner.appendChild(scroller);
 
     var footer = document.createElement("div");
     footer.className = "activity-footer";
     footer.appendChild(buildLegend());
-    mount.appendChild(footer);
+    inner.appendChild(footer);
+
+    mount.appendChild(inner);
 
     attachTooltip(scroller, grid.svg);
 

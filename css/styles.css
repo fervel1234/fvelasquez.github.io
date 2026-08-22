@@ -1099,14 +1099,21 @@ section h2, .page-hero h1 {
   max-width: 100%;
   /* Reserve the rendered height so the page doesn't jump when the fetch
      resolves. Matches TOP_PAD + 7 * STEP - GAP plus the summary/legend rows. */
-  min-height: 168px;
+  min-height: 292px;
 }
 
 .activity-summary {
   margin: 0 0 12px;
   font-family: var(--mono);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
+}
+
+/* Shrink-wrap the grid: at 13 columns it is narrower than the content column,
+   and a full-width box would leave the squares stranded in dead space. */
+.activity-inner {
+  width: fit-content;
+  max-width: 100%;
 }
 
 /* The grid keeps its natural width and scrolls inside this box on narrow
@@ -1139,7 +1146,7 @@ section h2, .page-hero h1 {
 .activity-axis {
   fill: var(--text-muted);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .activity-tooltip {
@@ -1201,7 +1208,7 @@ section h2, .page-hero h1 {
   background: var(--bg-alt);
   color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   text-align: center;
 }
 
@@ -1234,6 +1241,6 @@ section h2, .page-hero h1 {
   padding: 44px 0 56px;
 }
 .activity-section h2 {
-  font-size: 1.15rem;
+  font-size: 1.08rem;
   margin-bottom: 14px;
 }
