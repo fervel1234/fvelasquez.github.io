@@ -25,9 +25,9 @@
 
   /* Activity graph shading — monochrome white ramp, empty -> busiest day. */
   --act-0: #171d26;
-  --act-1: rgba(255, 255, 255, 0.20);
-  --act-2: rgba(255, 255, 255, 0.42);
-  --act-3: rgba(255, 255, 255, 0.68);
+  --act-1: rgba(255, 255, 255, 0.36);
+  --act-2: rgba(255, 255, 255, 0.56);
+  --act-3: rgba(255, 255, 255, 0.78);
   --act-4: #ffffff;
 }
 
@@ -46,9 +46,9 @@
   /* Inverted on light: white squares would vanish on a white page, so the
      same monochrome ramp runs toward ink instead. */
   --act-0: #eceef1;
-  --act-1: rgba(20, 22, 26, 0.16);
-  --act-2: rgba(20, 22, 26, 0.36);
-  --act-3: rgba(20, 22, 26, 0.60);
+  --act-1: rgba(20, 22, 26, 0.28);
+  --act-2: rgba(20, 22, 26, 0.48);
+  --act-3: rgba(20, 22, 26, 0.70);
   --act-4: #14161a;
 }
 
@@ -66,9 +66,9 @@
 
   /* Activity graph shading — monochrome white ramp, empty -> busiest day. */
   --act-0: #171d26;
-  --act-1: rgba(255, 255, 255, 0.20);
-  --act-2: rgba(255, 255, 255, 0.42);
-  --act-3: rgba(255, 255, 255, 0.68);
+  --act-1: rgba(255, 255, 255, 0.36);
+  --act-2: rgba(255, 255, 255, 0.56);
+  --act-3: rgba(255, 255, 255, 0.78);
   --act-4: #ffffff;
 }
 
@@ -1164,13 +1164,12 @@ section h2, .page-hero h1 {
 .activity-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 8px 16px;
   margin-top: 10px;
 }
 
-.activity-handles,
 .activity-legend {
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -1225,9 +1224,7 @@ section h2, .page-hero h1 {
 }
 
 @media (max-width: 700px) {
-  .activity-footer {
-    justify-content: flex-start;
-  }
+  .activity-footer { justify-content: flex-start; }
 }
 
 /* Secondary placement (blog index + post pages): the graph is supporting

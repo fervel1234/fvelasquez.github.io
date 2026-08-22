@@ -1,25 +1,31 @@
 /* ==========================================================================
-   Activity graph — GitHub-style daily contribution heatmap.
+   Activity graph — daily blog-posting heatmap, GitHub-contributions style.
 
-   Self-contained: no dependencies, no build step, no API key. Fetches public
-   contribution data for the handles in USERNAMES, merges the counts per day,
-   and renders a 7-row (Sun..Sat) x ~53-column (weeks) grid of squares.
+   The data source is blog.html itself: blog-admin already rewrites that file
+   on every publish and every edit, so the calendar stays current with no
+   changes to the publishing tool and no external API. On blog.html the cards
+   are read straight out of the live DOM; elsewhere the page is fetched once
+   (same-origin) and parsed.
 
-   Shading is monochrome and theme-aware: white-on-dark in dark mode (the
-   site default), inverted to ink-on-light in light mode so the squares stay
-   visible on a white page. All five steps come from the --act-* custom
-   properties in css/styles.css — no colors are hardcoded here.
+   Shading is monochrome and theme-aware: white-on-dark in dark mode (the site
+   default), inverted to ink-on-light in light mode so the squares stay visible
+   on a white page. All five steps come from the --act-* custom properties in
+   css/styles.css — no colors are hardcoded here.
    ========================================================================== */
 (function () {
   "use strict";
 
-  /* Handles to merge. Add or remove one here and everything downstream
-     (totals, levels, the summary line) follows automatically. */
-  var USERNAMES = ["fervel1234", "dr-abrianas"];
+  /* Resolve blog.html relative to this script, which is the one path that is
+     correct from both the site root and from a post page one level down.
+     Read at parse time — document.currentScript is null once we're in a
+     DOMContentLoaded callback. */
+  var SOURCE = (function () {
+    var s = document.currentScript;
+    if (s && s.src) return s.src.replace(/js\/activity\.js.*$/, "blog.html");
+    return "blog.html";
+  })();
 
-  var API = "https://github-contributions-api.jogruber.de/v4/";
-  var CACHE_KEY = "activity-graph-v1";
-  var CACHE_TTL_MS = 4 * 60 * 60 * 1000; /* 4h — plenty for a personal site */
+  var DAYS = 371; /* 53 weeks, the same window GitHub shows */
 
   /* Grid geometry, in SVG user units (= CSS px at 1:1). GitHub uses ~10px
      cells with 3px gutters; matching that keeps the visual rhythm familiar. */
@@ -49,44 +55,69 @@
       (day < 10 ? "0" + day : day);
   }
 
-  function addDays(d, n) {
-    return new Date(d.getTime() + n * 86400000);
-  }
+  function addDays(d, n) { return new Date(d.getTime() + n * 86400000); }
 
   function prettyDate(d) {
     return MONTHS[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
   }
 
-  /* ---------- data ---------- */
-
-  function fetchContributions(username) {
-    return fetch(API + encodeURIComponent(username) + "?y=last").then(function (res) {
-      if (!res.ok) throw new Error("bad response for " + username);
-      return res.json();
-    });
+  function today() {
+    var n = new Date();
+    return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()));
   }
 
-  /* Sum counts per date across every handle. Returns { "YYYY-MM-DD": count }. */
-  function mergeContributions(datasets) {
-    var byDate = {};
-    datasets.forEach(function (d) {
-      (d && d.contributions ? d.contributions : []).forEach(function (c) {
-        if (!c || !c.date) return;
-        byDate[c.date] = (byDate[c.date] || 0) + (c.count || 0);
+  /* ---------- data ---------- */
+
+  /* Pull one entry per .blog-card. Anything without a well-formed date is
+     skipped rather than allowed to poison the grid. */
+  function parsePosts(root) {
+    var posts = [];
+    var cards = root.querySelectorAll(".blog-card");
+    Array.prototype.forEach.call(cards, function (card) {
+      var dateEl = card.querySelector(".blog-card-date");
+      if (!dateEl) return;
+      var iso = dateEl.textContent.trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+      var titleEl = card.querySelector(".blog-card-title");
+      posts.push({
+        date: iso,
+        title: titleEl ? titleEl.textContent.trim() : "Untitled"
       });
+    });
+    return posts;
+  }
+
+  /* { "YYYY-MM-DD": ["Title", "Title"] } */
+  function groupByDate(posts) {
+    var byDate = {};
+    posts.forEach(function (p) {
+      (byDate[p.date] = byDate[p.date] || []).push(p.title);
     });
     return byDate;
   }
 
-  /* Bucket a day into 0-4. The per-handle `level` the API returns can't be
-     reused once counts are summed, so levels are recomputed against the
-     busiest day in the merged set — the same relative-quartile idea GitHub
-     uses, which keeps the shading readable whether the peak day is 4 commits
-     or 40. */
-  function levelFor(count, max) {
-    if (count <= 0 || max <= 0) return 0;
-    var q = Math.ceil((count / max) * 4);
-    return q < 1 ? 1 : (q > 4 ? 4 : q);
+  /* Post counts are small integers, so they map to the five steps directly
+     rather than being scaled against a busiest day: 1 post is the faintest
+     lit square, 4-or-more is full strength. */
+  function levelFor(count) {
+    if (count <= 0) return 0;
+    return count > 4 ? 4 : count;
+  }
+
+  function loadPosts() {
+    /* On blog.html the cards are already in the document. */
+    var local = document.getElementById("blog-list");
+    if (local) return Promise.resolve(parsePosts(local));
+
+    return fetch(SOURCE)
+      .then(function (res) {
+        if (!res.ok) throw new Error("could not load " + SOURCE);
+        return res.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        return parsePosts(doc);
+      });
   }
 
   /* ---------- rendering ---------- */
@@ -99,29 +130,25 @@
     return node;
   }
 
+  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
+
   function buildGrid(byDate) {
-    var dates = Object.keys(byDate).sort();
-    if (!dates.length) throw new Error("no contribution data");
-
-    var first = parseDate(dates[0]);
-    var last = parseDate(dates[dates.length - 1]);
-
+    var end = today();
+    var first = addDays(end, -(DAYS - 1));
     /* Columns are calendar weeks, so back the start up to its Sunday. */
     var start = addDays(first, -first.getUTCDay());
 
-    var max = 0;
-    var total = 0;
-    dates.forEach(function (k) {
-      var c = byDate[k];
-      total += c;
-      if (c > max) max = c;
-    });
-
-    var days = Math.round((last - start) / 86400000) + 1;
+    var days = Math.round((end - start) / 86400000) + 1;
     var cols = Math.ceil(days / 7);
 
     var width = LEFT_GUTTER + cols * STEP - GAP;
     var height = TOP_PAD + 7 * STEP - GAP;
+
+    var total = 0;
+    Object.keys(byDate).forEach(function (k) {
+      var d = parseDate(k);
+      if (d >= first && d <= end) total += byDate[k].length;
+    });
 
     var svg = el("svg", {
       class: "activity-svg",
@@ -129,8 +156,8 @@
       height: height,
       viewBox: "0 0 " + width + " " + height,
       role: "group",
-      "aria-label": total + " contributions in the last year, " +
-        prettyDate(first) + " to " + prettyDate(last)
+      "aria-label": plural(total, "post") + " in the last year, " +
+        prettyDate(first) + " to " + prettyDate(end)
     });
 
     /* Weekday labels — Mon/Wed/Fri only, the way GitHub does it, so the
@@ -155,8 +182,7 @@
       /* Month label whenever a column opens a new month. */
       if (colDate.getUTCMonth() !== lastMonth) {
         lastMonth = colDate.getUTCMonth();
-        /* Skip a label that would be clipped at the right edge. */
-        if (col < cols - 2) {
+        if (col < cols - 2) { /* skip a label that would be clipped */
           var m = el("text", {
             class: "activity-axis",
             x: LEFT_GUTTER + col * STEP,
@@ -170,30 +196,30 @@
 
       for (var row = 0; row < 7; row++) {
         var d = addDays(colDate, row);
-        if (d < first || d > last) continue;
+        if (d < first || d > end) continue;
 
-        var iso = toISO(d);
-        var count = byDate[iso] || 0;
-        var lvl = levelFor(count, max);
+        var titles = byDate[toISO(d)] || [];
+        var count = titles.length;
+        var label = count
+          ? plural(count, "post") + " on " + prettyDate(d) + ": " + titles.join(", ")
+          : "No posts on " + prettyDate(d);
 
-        var rect = el("rect", {
+        svg.appendChild(el("rect", {
           class: "activity-cell",
           x: LEFT_GUTTER + col * STEP,
           y: TOP_PAD + row * STEP,
           width: CELL,
           height: CELL,
           rx: 2,
-          "data-level": lvl,
-          "data-count": count,
-          "data-date": prettyDate(d),
+          "data-level": levelFor(count),
+          "data-label": label,
           role: "img",
-          "aria-label": count + (count === 1 ? " contribution on " : " contributions on ") + prettyDate(d)
-        });
-        svg.appendChild(rect);
+          "aria-label": label
+        }));
       }
     }
 
-    return { svg: svg, total: total, first: first, last: last };
+    return { svg: svg, total: total, first: first, end: end };
   }
 
   function buildLegend() {
@@ -218,7 +244,7 @@
     return legend;
   }
 
-  /* One tooltip element, moved around on hover, rather than 365 of them. */
+  /* One tooltip element, moved around on hover, rather than 371 of them. */
   function attachTooltip(scroller, svg) {
     var tip = document.createElement("div");
     tip.className = "activity-tooltip";
@@ -226,20 +252,15 @@
     scroller.appendChild(tip);
 
     function show(cell) {
-      var count = cell.getAttribute("data-count");
-      tip.textContent = count + (count === "1" ? " contribution" : " contributions") +
-        " on " + cell.getAttribute("data-date");
+      tip.textContent = cell.getAttribute("data-label");
       tip.classList.add("is-visible");
 
       /* Position relative to the scroller, accounting for its scroll offset
          so the tooltip tracks the cell when the grid is scrolled sideways. */
       var cellBox = cell.getBoundingClientRect();
       var hostBox = scroller.getBoundingClientRect();
-      var left = cellBox.left - hostBox.left + scroller.scrollLeft + cellBox.width / 2;
-      var top = cellBox.top - hostBox.top - 8;
-
-      tip.style.left = left + "px";
-      tip.style.top = top + "px";
+      tip.style.left = (cellBox.left - hostBox.left + scroller.scrollLeft + cellBox.width / 2) + "px";
+      tip.style.top = (cellBox.top - hostBox.top - 8) + "px";
     }
 
     function hide() { tip.classList.remove("is-visible"); }
@@ -259,8 +280,7 @@
 
     var summary = document.createElement("p");
     summary.className = "activity-summary";
-    summary.textContent = grid.total.toLocaleString() +
-      (grid.total === 1 ? " contribution" : " contributions") + " in the last year";
+    summary.textContent = plural(grid.total, "post") + " in the last year";
     mount.appendChild(summary);
 
     var scroller = document.createElement("div");
@@ -270,11 +290,6 @@
 
     var footer = document.createElement("div");
     footer.className = "activity-footer";
-
-    var handles = document.createElement("span");
-    handles.className = "activity-handles";
-    handles.textContent = USERNAMES.map(function (u) { return "@" + u; }).join(" + ");
-    footer.appendChild(handles);
     footer.appendChild(buildLegend());
     mount.appendChild(footer);
 
@@ -292,44 +307,12 @@
     mount.appendChild(p);
   }
 
-  /* ---------- boot ---------- */
-
-  function readCache() {
-    try {
-      var raw = sessionStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      var parsed = JSON.parse(raw);
-      if (!parsed || Date.now() - parsed.ts > CACHE_TTL_MS) return null;
-      return parsed.byDate;
-    } catch (e) {
-      return null; /* private mode, disabled storage, corrupt JSON — just refetch */
-    }
-  }
-
-  function writeCache(byDate) {
-    try {
-      sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), byDate: byDate }));
-    } catch (e) { /* non-fatal */ }
-  }
-
   function init() {
     var mount = document.getElementById("activity-graph");
     if (!mount) return;
 
-    var cached = readCache();
-    if (cached) {
-      try {
-        render(mount, cached);
-        return;
-      } catch (e) { /* fall through to a fresh fetch */ }
-    }
-
-    Promise.all(USERNAMES.map(fetchContributions))
-      .then(function (datasets) {
-        var byDate = mergeContributions(datasets);
-        writeCache(byDate);
-        render(mount, byDate);
-      })
+    loadPosts()
+      .then(function (posts) { render(mount, groupByDate(posts)); })
       .catch(function () { fail(mount); });
   }
 
