@@ -22,6 +22,13 @@
   --max-width: 920px;
   --max-width-layout: 1040px;
   --radius: 10px;
+
+  /* Activity graph shading — monochrome white ramp, empty -> busiest day. */
+  --act-0: #171d26;
+  --act-1: rgba(255, 255, 255, 0.20);
+  --act-2: rgba(255, 255, 255, 0.42);
+  --act-3: rgba(255, 255, 255, 0.68);
+  --act-4: #ffffff;
 }
 
 :root[data-theme="light"] {
@@ -35,6 +42,14 @@
   --accent-soft: rgba(11, 110, 153, 0.1);
   --code-bg: #f0f1f3;
   --shadow: 0 1px 2px rgba(20, 22, 26, 0.06), 0 8px 24px rgba(20, 22, 26, 0.04);
+
+  /* Inverted on light: white squares would vanish on a white page, so the
+     same monochrome ramp runs toward ink instead. */
+  --act-0: #eceef1;
+  --act-1: rgba(20, 22, 26, 0.16);
+  --act-2: rgba(20, 22, 26, 0.36);
+  --act-3: rgba(20, 22, 26, 0.60);
+  --act-4: #14161a;
 }
 
 :root[data-theme="dark"] {
@@ -48,6 +63,13 @@
   --accent-soft: rgba(86, 212, 255, 0.12);
   --code-bg: #171d26;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+
+  /* Activity graph shading — monochrome white ramp, empty -> busiest day. */
+  --act-0: #171d26;
+  --act-1: rgba(255, 255, 255, 0.20);
+  --act-2: rgba(255, 255, 255, 0.42);
+  --act-3: rgba(255, 255, 255, 0.68);
+  --act-4: #ffffff;
 }
 
 /* ==========================================================================
@@ -128,6 +150,12 @@ main { display: block; }
   align-items: start;
 }
 
+/* Grid items default to min-width: auto, which refuses to shrink below the
+   intrinsic width of their contents. Without this, any wide child (the
+   activity grid, a long line in a <pre>) widens the whole column and pushes
+   the PAGE sideways instead of scrolling inside its own box. */
+.page-content { min-width: 0; }
+
 .profile-sidebar {
   position: sticky;
   top: 84px;
@@ -175,7 +203,11 @@ main { display: block; }
     padding: 0 32px;
   }
 
-  .page-layout {
+  /* Only a .page-layout inside the .viewport-shell grid gives up its own
+     auto-centering — the shell's 1fr rails center it instead. Pages without
+     the shell (research/projects/blog/posts) must keep margin: 0 auto, or
+     they slam to the left edge on any display wide enough to hit 1600px. */
+  .viewport-shell > .page-layout {
     margin: 0;
     grid-column: 2;
   }
@@ -1057,4 +1089,154 @@ section h2, .page-hero h1 {
 
   .contact-list li { flex-direction: column; gap: 4px; }
   .contact-label { width: auto; }
+}
+
+/* ==========================================================================
+   Activity graph — GitHub-style daily contribution heatmap (js/activity.js)
+   ========================================================================== */
+
+.activity-graph {
+  max-width: 100%;
+  /* Reserve the rendered height so the page doesn't jump when the fetch
+     resolves. Matches TOP_PAD + 7 * STEP - GAP plus the summary/legend rows. */
+  min-height: 168px;
+}
+
+.activity-summary {
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* The grid keeps its natural width and scrolls inside this box on narrow
+   viewports — the page body itself must never scroll sideways. */
+.activity-scroll {
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.activity-svg { display: block; }
+
+.activity-cell {
+  fill: var(--act-0);
+  transition: opacity 0.1s ease;
+}
+.activity-cell[data-level="1"] { fill: var(--act-1); }
+.activity-cell[data-level="2"] { fill: var(--act-2); }
+.activity-cell[data-level="3"] { fill: var(--act-3); }
+.activity-cell[data-level="4"] { fill: var(--act-4); }
+.activity-cell:hover { opacity: 0.7; }
+
+.activity-axis {
+  fill: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+
+.activity-tooltip {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, -100%);
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.activity-tooltip.is-visible { opacity: 1; }
+
+.activity-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 10px;
+}
+
+.activity-handles,
+.activity-legend {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.activity-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.activity-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--act-0);
+}
+.activity-swatch[data-level="1"] { background: var(--act-1); }
+.activity-swatch[data-level="2"] { background: var(--act-2); }
+.activity-swatch[data-level="3"] { background: var(--act-3); }
+.activity-swatch[data-level="4"] { background: var(--act-4); }
+
+.activity-error {
+  margin: 0;
+  padding: 20px 12px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+/* Level 0 and level 1 are close enough in luminance that a forced-colors
+   palette can flatten them together — outline every cell so the grid still
+   reads as a grid. */
+@media (forced-colors: active) {
+  .activity-cell,
+  .activity-swatch {
+    forced-color-adjust: none;
+    stroke: CanvasText;
+    stroke-width: 0.5px;
+    outline: 1px solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activity-cell,
+  .activity-tooltip { transition: none; }
+}
+
+@media (max-width: 700px) {
+  .activity-footer {
+    justify-content: flex-start;
+  }
+}
+
+/* Secondary placement (blog index + post pages): the graph is supporting
+   content there, not a headline section, so it gets tighter vertical rhythm
+   than the 88px index.html sections. */
+.activity-section {
+  padding: 44px 0 56px;
+}
+.activity-section h2 {
+  font-size: 1.15rem;
+  margin-bottom: 14px;
 }
