@@ -103,67 +103,19 @@
 
   <section class="page-hero">
     <h1><span class="section-number">03</span>Projects</h1>
-    <p>Embedded systems and robotics projects &mdash; more to come as I build them.</p>
+    <p>Things I've designed, built, and broken.</p>
   </section>
 
-  <section class="page-section">
+  <div class="tag-filter" id="tag-filter" role="group" aria-label="Filter by tag"></div>
 
-    <!-- ============ PROJECT: ESP32 Maze Robot ============ -->
-    <article class="project">
-      <div class="img-frame">
-        <!-- TODO: drop a photo or GIF at assets/images/maze-robot-1.jpg -->
-        <img src="assets/images/maze-robot-1.jpg" alt="ESP32 maze-solving robot" onerror="this.closest('.img-frame').classList.add('img-error')">
-        <div class="img-fallback" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h4v4H7zM13 13h4v4h-4z"/></svg>
-          <span>maze-robot-1.jpg<br>(photo / GIF) goes here</span>
-        </div>
-      </div>
-      <div>
-        <p class="card-meta">Personal Project &middot; ESP32 &middot; Embedded Systems / Robotics</p>
-        <h2>ESP32 Maze-Solving Robot</h2>
-        <p>
-          An autonomous robot that explores and solves a physical maze in real time. Ultrasonic
-          sensors handle wall detection, an L298N H-bridge driver controls the drive motors, and a
-          breadth-first search (BFS) algorithm running on the ESP32 computes the shortest path once
-          enough of the maze has been mapped.
-        </p>
-        <p>
-          A WebSocket server on the ESP32 streams the robot's live position and discovered maze layout
-          to a browser-based visualizer, so the maze-solving process can be watched in real time from
-          any device on the network.
-        </p>
-        <ul class="tag-list">
-          <li>ESP32</li>
-          <li>Ultrasonic Sensors</li>
-          <li>L298N Motor Driver</li>
-          <li>BFS Pathfinding</li>
-          <li>WebSocket Visualizer</li>
-        </ul>
-        <div class="project-links">
-          <!-- TODO: replace with real repo link -->
-          <a href="#" class="placeholder-link" title="Placeholder — add the real repo URL">Code (placeholder link)</a>
-          <!-- TODO: replace with real demo video/link -->
-          <a href="#" class="placeholder-link" title="Placeholder — add a demo video/link">Demo (placeholder link)</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- ============ PROJECT TEMPLATE — duplicate this <article> to add more projects ============ -->
-    <article class="project project-placeholder">
-      <div class="img-frame">
-        <div class="img-fallback" aria-hidden="true" style="display:flex;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h4v4H7zM13 13h4v4h-4z"/></svg>
-          <span>next-project.jpg<br>goes here</span>
-        </div>
-      </div>
-      <div>
-        <p class="card-meta">Add project meta (type &middot; platform &middot; category)</p>
-        <h2>Next Project Title</h2>
-        <p>Duplicate this &lt;article class="project"&gt; block above to add another project, then fill in the description, tags, and links.</p>
-      </div>
-    </article>
-
+  <section class="card" id="projects-empty-state">
+    <p class="card-meta">Nothing here yet</p>
+    <h2>No projects published yet</h2>
+    <p>Projects will appear here as they're published.</p>
   </section>
+
+  <div class="blog-list" id="projects-list">
+  </div>
 
   <a href="index.html" class="back-link">&larr; Back to home</a>
 
@@ -175,5 +127,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/tags.js"></script>
 </body>
 </html>

@@ -103,55 +103,19 @@
 
   <section class="page-hero">
     <h1><span class="section-number">02</span>Research</h1>
-    <p>Quantum simulation algorithms, error mitigation, and the physics-to-hardware pipeline in between.</p>
+    <p>Research write-ups, notes, and results.</p>
   </section>
 
-  <section class="page-section article-block">
-    <p class="card-meta">NSF SROP Fellowship &middot; Summer 2025 &middot; Michigan State University</p>
-    <h2>Hydrogen&ndash;Lattice Quantum Computing Simulations</h2>
+  <div class="tag-filter" id="tag-filter" role="group" aria-label="Filter by tag"></div>
 
-    <div class="project">
-      <div class="img-frame">
-        <!-- TODO: drop a project image/diagram at assets/images/research-1.jpg -->
-        <img src="assets/images/research-1.jpg" alt="Hydrogen-lattice quantum simulation project visual" onerror="this.closest('.img-frame').classList.add('img-error')">
-        <div class="img-fallback" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 3"/></svg>
-          <span>research-1.jpg<br>(diagram / figure) goes here</span>
-        </div>
-      </div>
-      <div>
-        <p>
-          As part of the NSF Summer Research Opportunities Program (SROP), I joined the
-          <strong>Mendoza-Cort&eacute;s Group</strong> at Michigan State University, working under the
-          mentorship of <strong>William Comaskey</strong> on the Hydrogen-Lattice-QC project.
-        </p>
-        <p>
-          The project investigates near-term quantum algorithms &mdash; specifically the Variational
-          Quantum Eigensolver (VQE) and Quantum Imaginary Time Evolution (QITE) &mdash; for simulating
-          the ground-state energies of hydrogen lattice systems. A significant part of the work also
-          focused on quantum error mitigation techniques to make results from noisy, near-term quantum
-          hardware more reliable.
-        </p>
-        <ul class="tag-list">
-          <li>VQE</li>
-          <li>QITE</li>
-          <li>Quantum Error Mitigation</li>
-          <li>Hydrogen Lattice Simulation</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="callout">
-      <p>
-        This work builds on the <strong>Hydrogen-Lattice-QC</strong> repository, maintained by the
-        Mendoza-Cort&eacute;s Group &mdash; not my own repo, credited here rather than hosted on my GitHub.
-        <!-- TODO: replace with the real repository URL -->
-        <a href="#" class="placeholder-link" title="Placeholder — add the real repo URL">View the repository (placeholder link)</a>.
-      </p>
-    </div>
-
-    <p class="card-meta">Mentor: William Comaskey &middot; Group: Mendoza-Cort&eacute;s Group, Michigan State University</p>
+  <section class="card" id="research-empty-state">
+    <p class="card-meta">Nothing here yet</p>
+    <h2>No research write-ups published yet</h2>
+    <p>Research posts will appear here as they're published.</p>
   </section>
+
+  <div class="blog-list" id="research-list">
+  </div>
 
   <a href="index.html" class="back-link">&larr; Back to home</a>
 
@@ -163,5 +127,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/tags.js"></script>
 </body>
 </html>

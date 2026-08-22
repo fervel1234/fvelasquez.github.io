@@ -542,23 +542,6 @@ section h2, .page-hero h1 {
    Tag lists
    ========================================================================== */
 
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 14px 0 20px;
-}
-
-.tag-list li {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  border: 1px solid transparent;
-}
-
 /* ==========================================================================
    Cards (research / project previews on index)
    ========================================================================== */
@@ -762,7 +745,13 @@ section h2, .page-hero h1 {
 
 .post-body {
   max-width: 68ch;
+  /* Bare URLs typed into a post get auto-linked with the URL itself as the
+     link text. A 76-character one has no break opportunity, so without this
+     it forces the whole page wider than the phone. */
+  overflow-wrap: break-word;
 }
+
+.post-body a { overflow-wrap: anywhere; }
 
 .post-body h2 {
   font-size: 1.5rem;
@@ -953,6 +942,11 @@ section h2, .page-hero h1 {
   display: block;
 }
 .cv-embed .cv-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   padding: 40px 24px;
   text-align: center;
   color: var(--text-muted);
@@ -1075,17 +1069,27 @@ section h2, .page-hero h1 {
     flex-shrink: 0;
   }
 
+  /* Location and School carry long values, so they take the full width;
+     the four social links sit two-up beneath them in an even grid rather
+     than wrapping into ragged rows. */
   .profile-meta {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 14px 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
+    min-width: 0;
   }
+
+  .profile-meta > li:nth-child(1),
+  .profile-meta > li:nth-child(2) { grid-column: 1 / -1; }
+
+  .profile-meta > li { min-width: 0; }
+  .meta-value { overflow-wrap: break-word; }
 
   .project {
     grid-template-columns: 1fr;
   }
 
-  .cv-embed object { height: 420px; }
+  .cv-embed object { height: 300px; }
 
   .contact-list li { flex-direction: column; gap: 4px; }
   .contact-label { width: auto; }
@@ -1243,4 +1247,168 @@ section h2, .page-hero h1 {
 .activity-section h2 {
   font-size: 1.08rem;
   margin-bottom: 14px;
+}
+
+/* ==========================================================================
+   Tags — filter chips above a listing, inline labels on cards and posts
+   ========================================================================== */
+
+/* The whole bar is hidden until at least one tag exists, so an untagged site
+   shows nothing rather than an empty control. js/tags.js unhides it. */
+.tag-filter {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 28px;
+}
+.tag-filter.is-ready { display: flex; }
+
+.tag-filter-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+.tag-chip {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  line-height: 1;
+  /* 11px vertical padding keeps the tap target at ~44px with the font size,
+     which is the floor for a comfortable touch hit on a phone. */
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.tag-chip:hover { color: var(--text); border-color: var(--text-muted); }
+.tag-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tag-chip[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--text);
+}
+.tag-chip .tag-count { opacity: 0.6; margin-left: 6px; }
+
+/* Inline tag labels inside a card or under a post title. */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tag-list li { display: block; }
+
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+}
+
+.post-hero-tags { margin-top: 16px; }
+
+/* Shown when a filter matches nothing. */
+.tag-empty {
+  display: none;
+  margin: 0;
+  padding: 32px 20px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+}
+.tag-empty.is-visible { display: block; }
+
+/* ==========================================================================
+   Post attachments — PDF and video embeds
+   ========================================================================== */
+
+.post-attachment {
+  margin: 24px 0;
+  padding: 0;
+}
+.post-attachment figcaption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Video: fills the column and holds its shape at every width, so it never
+   forces the page wider or collapses to zero height while loading. */
+.post-video video,
+.post-video iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #000;
+}
+.post-video iframe { border: 0; }
+
+/* PDF: an inline viewer where there's room for one, and always a link card.
+   Phone browsers render inline PDFs poorly or not at all, so below 720px the
+   viewer is dropped and only the card remains. */
+.post-pdf object {
+  display: block;
+  width: 100%;
+  height: 560px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+}
+
+.pdf-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+.pdf-card:hover { border-color: var(--accent); }
+.pdf-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pdf-card svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--text-muted); }
+.pdf-name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.92rem;
+}
+.pdf-hint {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 720px) {
+  .post-pdf object { display: none; }
+  .pdf-card { margin-top: 0; }
+  .pdf-hint { display: none; }
 }
