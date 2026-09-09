@@ -32,15 +32,15 @@
 }
 
 :root[data-theme="light"] {
-  --bg: #ffffff;
-  --bg-alt: #f4f5f7;
+  --bg: #f7f5f0;
+  --bg-alt: #efece4;
   --text: #14161a;
   --text-muted: #565d66;
-  --border: #e2e4e8;
+  --border: #e2ded4;
   --accent: #0b6e99;
   --accent-ink: #ffffff;
   --accent-soft: rgba(11, 110, 153, 0.1);
-  --code-bg: #f0f1f3;
+  --code-bg: #eeebe3;
   --shadow: 0 1px 2px rgba(20, 22, 26, 0.06), 0 8px 24px rgba(20, 22, 26, 0.04);
 
   /* Inverted on light: white squares would vanish on a white page, so the
