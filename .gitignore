@@ -1,6 +1,7 @@
 .pio
 .vscode/
 .claude/
+.DS_Store
 
 # blog-admin: local-only post-authoring tool, never deployed to Pages.
 # Its generated output (blog/, blog.html, assets/images/blog/) is NOT

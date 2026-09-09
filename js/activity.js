@@ -39,8 +39,8 @@
   var LEFT_GUTTER = 34;  /* room for the Mon/Wed/Fri labels */
   var TOP_PAD = 22;      /* room for the month labels */
 
-  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var MONTHS = ["jan", "feb", "mar", "apr", "may", "jun",
+                "jul", "aug", "sep", "oct", "nov", "dec"];
   var SVG_NS = "http://www.w3.org/2000/svg";
 
   /* ---------- date helpers (UTC throughout, so the grid never shifts by a
@@ -85,7 +85,7 @@
       var titleEl = card.querySelector(".blog-card-title");
       posts.push({
         date: iso,
-        title: titleEl ? titleEl.textContent.trim() : "Untitled"
+        title: titleEl ? titleEl.textContent.trim() : "untitled"
       });
     });
     return posts;
@@ -206,7 +206,7 @@
         var count = titles.length;
         var label = count
           ? plural(count, "post") + " on " + prettyDate(d) + ": " + titles.join(", ")
-          : "No posts on " + prettyDate(d);
+          : "no posts on " + prettyDate(d);
 
         svg.appendChild(el("rect", {
           class: "activity-cell",
@@ -231,7 +231,7 @@
     legend.className = "activity-legend";
 
     var less = document.createElement("span");
-    less.textContent = "Less";
+    less.textContent = "less";
     legend.appendChild(less);
 
     for (var i = 0; i <= 4; i++) {
@@ -242,7 +242,7 @@
     }
 
     var more = document.createElement("span");
-    more.textContent = "More";
+    more.textContent = "more";
     legend.appendChild(more);
 
     return legend;
@@ -314,7 +314,7 @@
     mount.textContent = "";
     var p = document.createElement("p");
     p.className = "activity-error";
-    p.textContent = "Activity graph unavailable right now.";
+    p.textContent = "activity graph unavailable right now.";
     mount.appendChild(p);
   }
 

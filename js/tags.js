@@ -83,16 +83,16 @@
 
     var label = document.createElement("span");
     label.className = "tag-filter-label";
-    label.textContent = "Filter";
+    label.textContent = "filter";
     bar.appendChild(label);
 
-    var chips = [makeChip("All", cards.length, "")];
+    var chips = [makeChip("all", cards.length, "")];
     names.forEach(function (n) { chips.push(makeChip(n, counts[n], n)); });
     chips.forEach(function (c) { bar.appendChild(c); });
 
     var empty = document.createElement("p");
     empty.className = "tag-empty";
-    empty.textContent = "No posts with that tag yet.";
+    empty.textContent = "no posts with that tag yet.";
     list.parentNode.insertBefore(empty, list.nextSibling);
 
     function apply(tag, updateHash) {

@@ -44,7 +44,7 @@
     overlay.className = "lightbox-overlay";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Expanded image");
+    overlay.setAttribute("aria-label", "expanded image");
 
     var overlayImg = document.createElement("img");
     overlay.appendChild(overlayImg);
@@ -52,7 +52,7 @@
     var closeBtn = document.createElement("button");
     closeBtn.type = "button";
     closeBtn.className = "lightbox-close";
-    closeBtn.setAttribute("aria-label", "Close");
+    closeBtn.setAttribute("aria-label", "close");
     closeBtn.innerHTML = "&times;";
     overlay.appendChild(closeBtn);
 
@@ -103,12 +103,12 @@
     var toggle = document.createElement("button");
     toggle.type = "button";
     toggle.className = "code-collapse-toggle";
-    toggle.textContent = "Show all " + lineCount + " lines";
+    toggle.textContent = "show all " + lineCount + " lines";
     wrapper.appendChild(toggle);
 
     toggle.addEventListener("click", function () {
       var collapsed = wrapper.classList.toggle("is-collapsed");
-      toggle.textContent = collapsed ? "Show all " + lineCount + " lines" : "Show less";
+      toggle.textContent = collapsed ? "show all " + lineCount + " lines" : "show less";
     });
   });
 })();
