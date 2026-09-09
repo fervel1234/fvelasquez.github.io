@@ -2,6 +2,15 @@
 .vscode/
 .claude/
 
+# blog-admin: local-only post-authoring tool, never deployed to Pages.
+# Its generated output (blog/, blog.html, assets/images/blog/) is NOT
+# covered by this rule and is committed normally.
+blog-admin/
+
+# Local quick-launch shortcut for blog-admin (hardcoded machine-local
+# paths, macOS-only — never part of the deployed site).
+CV Blog Post.app/
+
 # PlatformIO firmware project (unrelated to the portfolio site in this repo)
 src/
 include/
