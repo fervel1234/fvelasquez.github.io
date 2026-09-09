@@ -11,6 +11,10 @@ blog-admin/
 # paths, macOS-only — never part of the deployed site).
 CV Blog Post.app/
 
+# impeccable design-hook local dedup cache — not meant to be shared/versioned;
+# .impeccable/config.json (the actual suppression rules) IS committed normally.
+.impeccable/hook.cache.json
+
 # PlatformIO firmware project (unrelated to the portfolio site in this repo)
 src/
 include/

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "css/styles.css"
+        ],
+        "createdAt": "2026-09-09T14:31:44.624Z",
+        "reason": "Standard blockquote quote-marker (.post-body blockquote border-left), pre-existing, confirmed false positive across multiple sessions per project memory"
+      }
+    ]
+  }
+}
