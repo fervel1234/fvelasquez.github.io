@@ -62,7 +62,9 @@ root (no build step, plain HTML/CSS/JS).
 - [ ] `index.html` Contact section — real email, GitHub, LinkedIn (currently
   `your.email@example.com`, `github.com/your-handle`, etc.)
 - [ ] `index.html` GIF rails (`.gif-rail-left` / `.gif-rail-right`, only
-  visible ≥1600px viewport) — 2 left slots, 3 right slots, currently
+  visible ≥1400px viewport — lowered from 1600px so it also fires on a
+  MacBook's own built-in display, not just external/Windows monitors; see
+  `css/styles.css` comment) — 2 left slots, 3 right slots, currently
   `.gif-placeholder` divs
 
 ## Useful context for research/projects content

@@ -44,7 +44,7 @@ Search each file for `TODO` comments, or just look for anything marked
       build more things — a duplicable template block is already at the
       bottom of the file
 - [ ] `index.html` GIF rails (`.gif-rail-left` / `.gif-rail-right`, only
-      visible on very wide screens ≥ 1600px) — replace each
+      visible on very wide screens ≥ 1400px) — replace each
       `.gif-placeholder` div with an `<img src="...">` pointing at a real
       GIF once you have links or files. Left has 2 slots, right has 3.
 
