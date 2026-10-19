@@ -41,6 +41,12 @@ root (no build step, plain HTML/CSS/JS).
 - Placeholder `<img>` tags use an inline `onerror` handler that swaps in a
   labeled placeholder box instead of a broken-image icon — safe to leave
   image `src` paths pointing at files that don't exist yet.
+- Every page (and `blog-admin/site_template/post_template.html`) carries a
+  hash-based `Content-Security-Policy` `<meta>`. It allow-lists exactly the
+  inline theme `<script>` and the three `onerror="this.closest(...)..."`
+  handlers by SHA-256. Changing any of those strings (or adding a new inline
+  script/handler) means recomputing the hashes and updating the meta tag on
+  every page, or that code will silently stop running.
 - New project entries in `projects.html` use the duplicable
   `<article class="project">` template block at the bottom of that file.
 

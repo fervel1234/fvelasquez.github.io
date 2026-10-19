@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll) build settings.
+# Internal docs describe the local blog-admin tool and how it patches pages —
+# useful in the repo, not something to publish on the live site.
+exclude:
+  - CLAUDE.md
+  - SITE-CONTRACT.md
+  - README.md

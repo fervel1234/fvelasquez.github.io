@@ -57,7 +57,12 @@
   /* Read a tag out of the URL so a filtered view can be linked to directly. */
   function tagFromHash() {
     var m = /^#tag=(.+)$/.exec(window.location.hash || "");
-    return m ? decodeURIComponent(m[1]) : "";
+    if (!m) return "";
+    try {
+      return decodeURIComponent(m[1]);
+    } catch (e) {
+      return ""; // malformed %-escape in a hand-typed/mangled link — show everything
+    }
   }
 
   function init() {
