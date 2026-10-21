@@ -57,8 +57,8 @@ root (no build step, plain HTML/CSS/JS).
 - [ ] Replace all `Your Name` placeholders (nav, hero, page `<title>`s,
   footer) with real name
 - [ ] Add `assets/images/headshot.jpg` (square, 500x500+)
-- [ ] Profile sidebar: real Location, GitHub URL, LinkedIn URL (currently
-  `#` placeholders in every page's `<aside class="profile-sidebar">`)
+- [x] Profile sidebar socials: icon-only GitHub/LinkedIn/X row
+  (`li.meta-socials`) on every page + post template; TikTok removed
 - [ ] Add `assets/images/school-logo.png`
 - [ ] Add `cv/resume.pdf` — CV section embed + download button already
   point here
@@ -67,8 +67,10 @@ root (no build step, plain HTML/CSS/JS).
   `assets/images/research-1.jpg` if there's a figure to show
 - [ ] `projects.html` — add `assets/images/maze-robot-1.jpg` (or a GIF) for
   the ESP32 maze-solving robot project; replace placeholder Code/Demo links
-- [ ] `index.html` Contact section — real email, GitHub, LinkedIn (currently
-  `your.email@example.com`, `github.com/your-handle`, etc.)
+- [ ] `index.html` Contact section — real email still needed (socials
+  done as icon-only `li.contact-socials` row)
+- Stylesheet links carry `?v=YYYYMMDD` to bust browser caches; bump it on
+  every page when CSS changes need to show up immediately
 - [ ] `index.html` GIF rails (`.gif-rail-left` / `.gif-rail-right`, only
   visible ≥1400px viewport — lowered from 1600px so it also fires on a
   MacBook's own built-in display, not just external/Windows monitors; see
