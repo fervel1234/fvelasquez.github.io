@@ -1467,3 +1467,11 @@ section h2, .page-hero h1 {
 .contact-socials a { display: inline-flex; color: var(--accent); }
 .contact-socials a:hover { text-decoration: none; opacity: 0.8; }
 .contact-socials .meta-icon { color: currentColor; }
+
+/* Sidebar row spans the headshot's width: first logo flush left, last flush
+   right, middle one centered. On mobile the photo sits beside the list, so
+   the logos go back to a plain left-aligned row there. */
+.profile-meta .meta-socials { justify-content: space-between; }
+@media (max-width: 720px) {
+  .profile-meta .meta-socials { justify-content: flex-start; }
+}
