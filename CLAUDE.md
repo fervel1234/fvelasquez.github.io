@@ -22,6 +22,8 @@ root (no build step, plain HTML/CSS/JS).
 - `research.html` — full Research writeup
 - `projects.html` — full Projects list
 - `blog.html` — full Blog page (placeholder until real posts exist)
+- `branch.html` — "branch^n" section; intentionally blank apart from one
+  centered text box (`.branch-input`)
 - `css/styles.css` — all styles (theme variables, layout, responsive rules)
 - `js/main.js` — theme toggle, mobile nav, image-placeholder fallback
 - `assets/images/` — project/headshot images go here (currently empty except

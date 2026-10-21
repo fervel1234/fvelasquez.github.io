@@ -1427,3 +1427,32 @@ section h2, .page-hero h1 {
   .pdf-card { margin-top: 0; }
   .pdf-hint { display: none; }
 }
+
+/* ==========================================================================
+   branch^n page — intentionally blank apart from one centered text box
+   ========================================================================== */
+
+.nav-links sup { font-size: 0.65em; line-height: 0; }
+
+.branch-hero {
+  display: flex;
+  justify-content: center;
+  padding-top: 64px;
+}
+
+.branch-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 14px;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+.branch-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
