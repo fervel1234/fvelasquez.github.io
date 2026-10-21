@@ -1434,10 +1434,10 @@ section h2, .page-hero h1 {
 
 .nav-links sup { font-size: 0.65em; line-height: 0; }
 
-.branch-hero {
+.branch-page {
   display: flex;
   justify-content: center;
-  padding-top: 64px;
+  padding: 64px 24px 0;
 }
 
 .branch-input {
