@@ -1429,7 +1429,7 @@ section h2, .page-hero h1 {
 }
 
 /* ==========================================================================
-   branch^n page — intentionally blank apart from one centered text box
+   branch^n page — intentionally blank apart from one centered line of text
    ========================================================================== */
 
 .nav-links sup { font-size: 0.65em; line-height: 0; }
@@ -1440,21 +1440,14 @@ section h2, .page-hero h1 {
   padding: 64px 24px 0;
 }
 
-.branch-input {
-  width: 100%;
-  max-width: 420px;
-  padding: 10px 14px;
+.branch-text {
+  max-width: 560px;
+  margin: 0;
   font-family: var(--mono);
   font-size: 1rem;
+  line-height: 1.7;
   color: var(--text);
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
   text-align: center;
-}
-.branch-input:focus {
-  outline: none;
-  border-color: var(--accent);
 }
 
 /* Social links are icon-only (sidebar + contact): one row of logos. */
