@@ -22,6 +22,8 @@ root (no build step, plain HTML/CSS/JS).
 - `research.html` — full Research writeup
 - `projects.html` — full Projects list
 - `blog.html` — full Blog page (placeholder until real posts exist)
+- `notes.html` — "class notes" section (nav slot after projects); empty state
+  `.notes-empty` inside `#notes-list` until notes are uploaded
 - `branch.html` — "branch^n" section; intentionally blank apart from one
   centered text box (`.branch-input`); no profile sidebar or footer
 - `css/styles.css` — all styles (theme variables, layout, responsive rules)
@@ -71,6 +73,8 @@ root (no build step, plain HTML/CSS/JS).
   done as icon-only `li.contact-socials` row)
 - Stylesheet links carry `?v=YYYYMMDD` to bust browser caches; bump it on
   every page when CSS changes need to show up immediately
+- Nav has 8 links; the hamburger menu kicks in at ≤960px (was 720px)
+  because the full bar overflowed between ~720–905px
 - [ ] `index.html` GIF rails (`.gif-rail-left` / `.gif-rail-right`, only
   visible ≥1400px viewport — lowered from 1600px so it also fires on a
   MacBook's own built-in display, not just external/Windows monitors; see

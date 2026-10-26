@@ -397,6 +397,7 @@ section h2, .page-hero h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   padding-top: 14px;
   padding-bottom: 14px;
   position: relative;
@@ -414,7 +415,7 @@ section h2, .page-hero h1 {
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 22px;
   margin-left: auto;
   margin-right: 20px;
 }
@@ -422,6 +423,7 @@ section h2, .page-hero h1 {
 .nav-links a {
   color: var(--text-muted);
   font-size: 0.95rem;
+  white-space: nowrap;
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -1033,12 +1035,9 @@ section h2, .page-hero h1 {
    Responsive
    ========================================================================== */
 
-@media (max-width: 720px) {
-  body { font-size: 16px; }
-
-  section, .page-section,
-  #research, #projects, #blog { padding: 56px 0; }
-
+/* Hamburger nav kicks in below 960px — the 8-link bar no longer fits
+   between ~720px and ~905px viewports. */
+@media (max-width: 960px) {
   .nav-toggle { display: flex; }
 
   .nav-links {
@@ -1061,6 +1060,14 @@ section h2, .page-hero h1 {
     border-bottom: 1px solid var(--border);
   }
   .nav-links li:last-child a { border-bottom: none; }
+}
+
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+
+  section, .page-section,
+  #research, #projects, #blog { padding: 56px 0; }
+
 
   .hero { padding-top: 36px; }
 
@@ -1468,3 +1475,6 @@ section h2, .page-hero h1 {
 @media (max-width: 720px) {
   .profile-meta .meta-socials { justify-content: flex-start; }
 }
+
+/* Class notes page — empty state until notes are uploaded */
+.notes-empty { color: var(--text-muted); }
