@@ -41,7 +41,14 @@ root (no build step, plain HTML/CSS/JS).
   `<head>` before paint). Toggle choice persists via `localStorage`.
 - Two-column layout on every page: sticky left `.profile-sidebar` (photo,
   location, school, GitHub, LinkedIn) + centered `.page-content`.
-  Collapses to single column on mobile.
+  Collapses to single column on mobile. Exception: on `blog.html`
+  (`<body class="page-blog">`) the sidebar is NOT sticky and posts render as
+  a 3-wide grid (2 ≤960px, 1 ≤520px) of tall cards — date/title/excerpt
+  above a square image, tags below — via CSS-only reordering of the
+  unchanged blog-admin card markup (see "Blog page only" in styles.css).
+- Theme: light = pure white `#fff`; dark = pure black `#000` with white
+  `--accent` (links, icons, active states). Text greys unchanged. Pre-change
+  look saved on local branch `backup/pre-white-black-grid-20261102`.
 - Placeholder `<img>` tags use an inline `onerror` handler that swaps in a
   labeled placeholder box instead of a broken-image icon — safe to leave
   image `src` paths pointing at files that don't exist yet.

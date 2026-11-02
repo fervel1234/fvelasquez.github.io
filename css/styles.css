@@ -4,15 +4,17 @@
 
 :root {
   /* Dark is the default theme; data-theme="light" overrides it below. */
-  --bg: #0d1117;
-  --bg-alt: #12171e;
+  /* Pure black page; accents (links, active nav, icons) are plain white.
+     --text / --text-muted keep their original greys. */
+  --bg: #000000;
+  --bg-alt: #0b0b0b;
   --text: #e6edf3;
   --text-muted: #9aa4b2;
-  --border: #262d38;
-  --accent: #56d4ff;
-  --accent-ink: #04121a;
-  --accent-soft: rgba(86, 212, 255, 0.12);
-  --code-bg: #171d26;
+  --border: #262626;
+  --accent: #ffffff;
+  --accent-ink: #000000;
+  --accent-soft: rgba(255, 255, 255, 0.12);
+  --code-bg: #111111;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
 
   --sans: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -26,23 +28,25 @@
   /* Activity graph shading — muted grey-to-black ramp, empty -> busiest day.
      Capped well below white so the busiest cells don't glare against the
      dark background. */
-  --act-0: #171d26;
-  --act-1: #313944;
-  --act-2: #4b5563;
-  --act-3: #6b7280;
-  --act-4: #9299a6;
+  --act-0: #161616;
+  --act-1: #333333;
+  --act-2: #4d4d4d;
+  --act-3: #6e6e6e;
+  --act-4: #969696;
 }
 
 :root[data-theme="light"] {
-  --bg: #f7f5f0;
-  --bg-alt: #efece4;
+  /* Pure white page; panels/borders are neutral greys, not the old warm
+     off-white. */
+  --bg: #ffffff;
+  --bg-alt: #f4f4f5;
   --text: #14161a;
   --text-muted: #565d66;
-  --border: #e2ded4;
+  --border: #e4e4e7;
   --accent: #0b6e99;
   --accent-ink: #ffffff;
   --accent-soft: rgba(11, 110, 153, 0.1);
-  --code-bg: #eeebe3;
+  --code-bg: #f4f4f5;
   --shadow: 0 1px 2px rgba(20, 22, 26, 0.06), 0 8px 24px rgba(20, 22, 26, 0.04);
 
   /* Inverted on light: white squares would vanish on a white page, so the
@@ -55,25 +59,27 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0d1117;
-  --bg-alt: #12171e;
+  /* Pure black page; accents (links, active nav, icons) are plain white.
+     --text / --text-muted keep their original greys. */
+  --bg: #000000;
+  --bg-alt: #0b0b0b;
   --text: #e6edf3;
   --text-muted: #9aa4b2;
-  --border: #262d38;
-  --accent: #56d4ff;
-  --accent-ink: #04121a;
-  --accent-soft: rgba(86, 212, 255, 0.12);
-  --code-bg: #171d26;
+  --border: #262626;
+  --accent: #ffffff;
+  --accent-ink: #000000;
+  --accent-soft: rgba(255, 255, 255, 0.12);
+  --code-bg: #111111;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
 
   /* Activity graph shading — muted grey-to-black ramp, empty -> busiest day.
      Capped well below white so the busiest cells don't glare against the
      dark background. */
-  --act-0: #171d26;
-  --act-1: #313944;
-  --act-2: #4b5563;
-  --act-3: #6b7280;
-  --act-4: #9299a6;
+  --act-0: #161616;
+  --act-1: #333333;
+  --act-2: #4d4d4d;
+  --act-3: #6e6e6e;
+  --act-4: #969696;
 }
 
 /* ==========================================================================
@@ -747,6 +753,53 @@ section h2, .page-hero h1 {
 
 @media (max-width: 720px) {
   .blog-card { grid-template-columns: 1fr; }
+}
+
+/* ---- Blog page only: 3-wide grid of tall cards ----
+   Scoped to body.page-blog so research.html / index.html keep the row-style
+   cards above. Card markup is unchanged (blog-admin still emits img-frame
+   then .blog-card-body); the body is flattened with display: contents so its
+   children can be reordered around the image: date, title, excerpt, image,
+   tags. Each card is a 5-row subgrid so images line up across a row even
+   when titles/excerpts wrap to different lengths. Newest post is first in
+   the markup, so it lands top-left and fills left-to-right. */
+
+.page-blog .profile-sidebar { position: static; }
+
+.page-blog .blog-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 0;
+}
+
+.page-blog .blog-card {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  grid-template-columns: none;
+  gap: 0;
+  align-items: start;
+  padding: 0 0 40px;
+  border-bottom: none;
+}
+
+.page-blog .blog-list .blog-card:last-child { padding-bottom: 40px; }
+
+.page-blog .blog-card-body { display: contents; }
+
+.page-blog .blog-card-date    { order: 1; margin-bottom: 4px; }
+.page-blog .blog-card-title   { order: 2; font-size: 1.05rem; margin-bottom: 4px; }
+.page-blog .blog-card-excerpt { order: 3; font-size: 0.8rem; line-height: 1.45; margin-bottom: 12px; }
+.page-blog .blog-card .img-frame { order: 4; aspect-ratio: 1 / 1; align-self: stretch; }
+.page-blog .blog-card .tag-list  { order: 5; margin-top: 10px; }
+
+@media (max-width: 960px) {
+  .page-blog .blog-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .page-blog .blog-list { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ---- Blog post page ---- */
