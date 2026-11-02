@@ -43,7 +43,7 @@ root (no build step, plain HTML/CSS/JS).
   location, school, GitHub, LinkedIn) + centered `.page-content`.
   Collapses to single column on mobile. Exception: on `blog.html`
   (`<body class="page-blog">`) the sidebar is NOT sticky and posts render as
-  a 3-wide grid (2 ≤960px, 1 ≤520px) of tall cards — date/title/excerpt
+  a 3-wide grid (56px gaps, page widened to 1240px; 2 ≤960px, 1 ≤520px) of tall cards — date/title/excerpt
   above a square image, tags below — via CSS-only reordering of the
   unchanged blog-admin card markup (see "Blog page only" in styles.css).
 - Theme: light = pure white `#fff`; dark = pure black `#000` with white

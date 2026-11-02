@@ -766,10 +766,13 @@ section h2, .page-hero h1 {
 
 .page-blog .profile-sidebar { position: static; }
 
+/* Wider page + wider gutters on the blog so the grid breathes sideways. */
+.page-blog .page-layout { max-width: 1240px; }
+
 .page-blog .blog-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 28px;
+  column-gap: 56px;
   row-gap: 0;
 }
 
@@ -795,7 +798,7 @@ section h2, .page-hero h1 {
 .page-blog .blog-card .tag-list  { order: 5; margin-top: 10px; }
 
 @media (max-width: 960px) {
-  .page-blog .blog-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-blog .blog-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 36px; }
 }
 
 @media (max-width: 520px) {
