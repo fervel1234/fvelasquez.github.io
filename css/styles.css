@@ -1091,32 +1091,8 @@ section h2, .page-hero h1 {
    Responsive
    ========================================================================== */
 
-/* Hamburger nav kicks in below 960px — the 8-link bar no longer fits
-   between ~720px and ~905px viewports. */
-@media (max-width: 960px) {
-  .nav-toggle { display: flex; }
-
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    gap: 0;
-    padding: 8px 24px 16px;
-    display: none;
-  }
-  .nav-links.open { display: flex; }
-  .nav-links li { width: 100%; }
-  .nav-links a {
-    display: block;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-links li:last-child a { border-bottom: none; }
-}
+/* (Old hamburger dropdown removed: the nav is now just the centered name,
+   which opens the circuit menu — see "Circuit nav" at the end of this file.) */
 
 @media (max-width: 720px) {
   body { font-size: 16px; }
@@ -1534,3 +1510,133 @@ section h2, .page-hero h1 {
 
 /* Class notes page — empty state until notes are uploaded */
 .notes-empty { color: var(--text-muted); }
+
+/* ==========================================================================
+   Circuit nav — the header shows only the centered name. A strobe sweeps
+   across it left to right so it reads as clickable; hovering (or tapping)
+   it grows circuit traces down from the top of the page, then one
+   "electron" per letter runs each trace and spells out the section name.
+   The old .nav-links list stays in the HTML as the data source for
+   js/main.js (it builds the circuit labels from those links).
+   ========================================================================== */
+
+.nav { justify-content: flex-end; min-height: 58px; }
+.nav-links,
+.nav-toggle { display: none; }
+
+.nav-name {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.nav-name:hover { color: var(--text); }
+
+.nav-name-char {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0.55;
+  animation: name-strobe 3.2s ease-in-out infinite;
+}
+@keyframes name-strobe {
+  0%, 28%, 100% { opacity: 0.55; transform: scale(1); text-shadow: none; }
+  11% {
+    opacity: 1;
+    transform: scale(1.22);
+    text-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+}
+/* While the circuit is open the name holds fully lit instead of strobing. */
+.circuit-open .nav-name-char { animation: none; opacity: 1; }
+
+.circuit-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 40; /* under the sticky header (50) so the name stays on top */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--bg) 93%, transparent);
+  backdrop-filter: blur(3px);
+  transition: opacity 0.1s ease, visibility 0s linear 0.1s;
+}
+.circuit-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.15s ease;
+}
+
+.circuit-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.circuit-trace {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  stroke-linejoin: miter;
+  stroke-linecap: square;
+  opacity: 0.75;
+  transition: stroke 0.15s ease, opacity 0.15s ease;
+}
+.circuit-trace.is-hot { stroke: var(--accent); opacity: 1; }
+.circuit-pad {
+  fill: var(--bg);
+  stroke: var(--text);
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.circuit-pad.is-on { opacity: 1; }
+.circuit-comp {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.circuit-comp.is-on { opacity: 0.9; }
+.circuit-comp-gap { fill: var(--bg); stroke: none; }
+.circuit-comp.is-live { stroke: var(--accent); opacity: 1; }
+.circuit-comp.comp-led.is-live path:nth-child(3) {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 4px var(--accent));
+}
+.circuit-electron { fill: var(--accent); }
+.circuit-pin { fill: var(--text); }
+/* Traces start right under the name, so the header goes see-through while
+   the circuit is open (the overlay's own dim backdrop shows behind it). */
+.circuit-open .site-header { background: transparent; backdrop-filter: none; }
+.circuit-halo { fill: var(--accent); opacity: 0.22; }
+
+.circuit-label {
+  position: absolute;
+  transform: translateY(-50%);
+  padding: 6px 4px;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--text);
+  white-space: nowrap;
+}
+.circuit-label:hover,
+.circuit-label:focus-visible { color: var(--accent); text-decoration: none; }
+.circuit-label sup { font-size: 0.65em; line-height: 0; }
+.circuit-char {
+  white-space: pre;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.circuit-char.is-lit { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-name-char { animation: none; opacity: 1; }
+  .circuit-char { transition: none; }
+}
