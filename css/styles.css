@@ -1640,3 +1640,85 @@ section h2, .page-hero h1 {
   .nav-name-char { animation: none; opacity: 1; }
   .circuit-char { transition: none; }
 }
+
+/* ==========================================================================
+   branch^n — "first principles" prerequisite circuit (built by js/branch.js).
+   Courses are IC chips, books are socketed parts at the bottom; pulses of
+   light run each trace from prerequisite to topic. White in dark mode, the
+   accent blue in light mode (white light would vanish on a white page).
+   ========================================================================== */
+
+.branch-page { flex-direction: column; align-items: center; }
+.fp-heading {
+  margin: 48px 0 8px;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+.fp-chart {
+  width: 100%;
+  max-width: 1000px;
+  overflow-x: auto;
+  padding-bottom: 24px;
+}
+.fp-svg { display: block; width: 100%; min-width: 640px; height: auto; }
+
+.fp-trace {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  stroke-linejoin: miter;
+  stroke-linecap: square;
+  opacity: 0.55;
+  transition: stroke 0.15s ease, opacity 0.15s ease;
+}
+.fp-trace.is-main { stroke-width: 2.2; opacity: 0.8; }
+.fp-trace.is-hot { stroke: var(--accent); opacity: 1; }
+.fp-pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.fp-pin { fill: var(--text); }
+.fp-pad {
+  fill: var(--bg);
+  stroke: var(--text);
+  stroke-width: 1.4;
+  transition: fill 0.2s ease;
+}
+.fp-pad.is-live { fill: var(--accent); }
+.is-animating .fp-pad:not(.is-on) { opacity: 0; }
+
+.fp-comp { fill: none; stroke: var(--text); stroke-width: 1.4; stroke-linejoin: round; opacity: 0.85; }
+.is-animating .fp-comp:not(.is-on) { opacity: 0; }
+.fp-comp-gap { fill: var(--bg); stroke: none; }
+.fp-comp.is-live { stroke: var(--accent); opacity: 1; }
+.fp-comp.comp-led.is-live path:nth-child(3) { fill: var(--accent); }
+
+.fp-node { cursor: default; outline: none; }
+.fp-body { fill: var(--bg); stroke: var(--text); stroke-width: 1.5; transition: stroke 0.15s ease; }
+.fp-stubs, .fp-notch { fill: none; stroke: var(--text-muted); stroke-width: 1.5; }
+.fp-node:hover .fp-body,
+.fp-node:focus-visible .fp-body { stroke: var(--accent); }
+.fp-label { fill: var(--text); font-family: var(--mono); font-size: 15px; }
+.fp-book-label { font-size: 12px; fill: var(--text-muted); }
+.is-animating .fp-node { animation: fp-node-in 0.4s ease both; }
+@keyframes fp-node-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Bloch sphere has a black-line and a white-line version; show the one
+   that reads on the current background. */
+.fp-img-dark { display: none; }
+:root:not([data-theme="light"]) .fp-img-dark { display: inline; }
+:root:not([data-theme="light"]) .fp-img-light { display: none; }
+
+.fp-credit {
+  margin: 0 0 48px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.fp-credit a { color: var(--text-muted); text-decoration: underline; }
