@@ -1706,6 +1706,9 @@ section h2, .page-hero h1 {
 .fp-node:focus-visible .fp-body { stroke: var(--accent); }
 .fp-label { fill: var(--text); font-family: var(--mono); font-size: 15px; }
 .fp-book-label { font-size: 12px; fill: var(--text-muted); }
+.fp-node.is-link { cursor: pointer; }
+.fp-node.is-link:hover .fp-label,
+.fp-node.is-link:focus-visible .fp-label { fill: var(--accent); text-decoration: underline; }
 .is-animating .fp-node { animation: fp-node-in 0.4s ease both; }
 @keyframes fp-node-in { from { opacity: 0; } to { opacity: 1; } }
 

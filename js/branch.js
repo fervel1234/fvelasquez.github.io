@@ -4,7 +4,7 @@
    one chip to the top of the next (or straight across for same-row
    co-requisites). Traces grow in on load, then pulses of light run along
    them from prerequisite to topic. "Main" traces (calc I → II → III,
-   physics I → II → modern, chem I → II) pulse as one chained run in
+   physics I → II → thermal, chem I → II) pulse as one chained run in
    increasing order; every cross-topic trace pulses on its own clock.
    Everything lives in one SVG with a fixed viewBox so it scales as a unit. */
 (function () {
@@ -25,18 +25,22 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Course chips link to their catalog entry (Wright = City Colleges catalog).
+  var CCC = "https://catalog.ccc.edu/search/?P=";
+  var UIC = "https://catalog.uic.edu/search/?P=";
+
   var NODES = [
-    { id: "calc1", label: "calc I", tier: 0, col: 1 },
-    { id: "phys1", label: "physics I", tier: 0, col: 2 },
-    { id: "chem1", label: "chem I", tier: 0, col: 3 },
-    { id: "calc2", label: "calc II", tier: 1, col: 1 },
-    { id: "phys2", label: "physics II", tier: 1, col: 2 },
-    { id: "chem2", label: "chem II", tier: 1, col: 3 },
-    { id: "calc3", label: "calc III", tier: 2, col: 0 },
-    { id: "linalg", label: "linear algebra", tier: 2, col: 1 },
-    { id: "diffeq", label: "diff eq", tier: 2, col: 2 },
-    { id: "circuits", label: "circuit analysis", tier: 2, col: 3 },
-    { id: "modern", label: "modern physics", tier: 2, col: 4 },
+    { id: "calc1", label: "MATH 207", href: CCC + "MATH%20207", tier: 0, col: 1 },
+    { id: "phys1", label: "PHYSICS 235", href: CCC + "PHYSICS%20235", tier: 0, col: 2 },
+    { id: "chem1", label: "CHEM 201", href: CCC + "CHEM%20201", tier: 0, col: 3 },
+    { id: "calc2", label: "MATH 208", href: CCC + "MATH%20208", tier: 1, col: 1 },
+    { id: "phys2", label: "PHYSICS 236", href: CCC + "PHYSICS%20236", tier: 1, col: 2 },
+    { id: "chem2", label: "CHEM 203", href: CCC + "CHEM%20203", tier: 1, col: 3 },
+    { id: "calc3", label: "MATH 209", href: CCC + "MATH%20209", tier: 2, col: 0 },
+    { id: "linalg", label: "MATH 212", href: CCC + "MATH%20212", tier: 2, col: 1 },
+    { id: "diffeq", label: "MATH 210", href: CCC + "MATH%20210", tier: 2, col: 2 },
+    { id: "circuits", label: "ECE 225", href: UIC + "ECE%20225", tier: 2, col: 3 },
+    { id: "thermal", label: "PHYS 260", href: UIC + "PHYS%20260", tier: 2, col: 4 },
     { id: "griffiths", book: true, tier: 3, col: 2,
       img: "assets/images/branch/griffiths-qm-3e.jpg",
       lines: ["intro to quantum", "mechanics, 3e"],
@@ -55,15 +59,15 @@
   // [from, to, main?] — main = the same subject continuing to its next course.
   var EDGES = [
     ["calc1", "calc2", true], ["calc2", "calc3", true],
-    ["phys1", "phys2", true], ["phys2", "modern", true],
+    ["phys1", "phys2", true], ["phys2", "thermal", true],
     ["chem1", "chem2", true],
     ["calc1", "phys1"], ["calc2", "phys2"],
     ["calc2", "linalg"], ["calc2", "diffeq"],
     ["phys2", "circuits"], ["diffeq", "circuits"],
-    ["calc3", "griffiths"], ["linalg", "griffiths"], ["diffeq", "griffiths"], ["modern", "griffiths"],
+    ["calc3", "griffiths"], ["linalg", "griffiths"], ["diffeq", "griffiths"], ["thermal", "griffiths"],
     ["griffiths", "qalg"], ["griffiths", "neaman"],
     ["linalg", "qalg"],
-    ["chem2", "neaman"], ["circuits", "neaman"], ["modern", "neaman"]
+    ["chem2", "neaman"], ["circuits", "neaman"], ["thermal", "neaman"]
   ];
 
   var byId = {};
@@ -255,9 +259,11 @@
 
   /* Chips: a body with pin stubs along the top and bottom edges. */
   NODES.forEach(function (n) {
-    var g = svgEl("g", { "class": "fp-node" + (n.book ? " is-book" : ""), tabindex: "0" }, nodeLayer);
+    var g = n.href
+      ? svgEl("a", { "class": "fp-node is-link", href: n.href, target: "_blank", rel: "noopener" }, nodeLayer)
+      : svgEl("g", { "class": "fp-node" + (n.book ? " is-book" : ""), tabindex: "0" }, nodeLayer);
     n.g = g;
-    svgEl("title", {}, g).textContent = n.title || n.label;
+    svgEl("title", {}, g).textContent = n.title || (n.href ? n.label + " — course overview" : n.label);
     var stubs = "";
     for (var x = n.x + 12; x <= n.x + n.w - 12; x += 12) {
       stubs += "M" + x + " " + n.y + "v-5M" + x + " " + (n.y + n.h) + "v5";
